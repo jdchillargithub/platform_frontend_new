@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Booking</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <!-- Bootstrap DateTimePicker CSS (Assuming you're using Tempus Dominus for Bootstrap 4) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css">
+
+    <!-- Your custom styles (if any) -->
+    
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h3 class="text-center pb-3">BOOK APPOINTMENT </h3>
+        <!-- Top Card Split -->
+        <div class="card">
+            <div class="row no-gutters">
+                <!-- Left Section with Image -->
+                <div class="col-md-4">
+                    <img src="images/Wc2xbVeJl0d6cyfWGCxlvcsxxYogVqsJElJy5tvN.jpeg" class="card-img p-5"
+                        alt="Doctor Image">
+                </div>
+                <!-- Right Section with Name, Designation, and Consulting Fees -->
+                <div class="col-md-8 pl-5 pr-5 pt-3">
+                    <div class="card-body">
+                        <h4 class="card-title"><b>Dr. Jabir Abdullakutty</b></h4>
+                        <p class="card-tex">Senior Consultant & Director of Clinical Research (Cardiology)</p>
+
+                        <div>
+                            <h5 class="pt-5 ">Consulting Fees: ₹ 500</h5>
+                        </div><!-- Add more details as needed -->
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Date Picker -->
+        <div class="mt-4 ">
+            <label for="datepicker">
+                <span class="date-title">Select Date</span>
+            </label>
+            <div class="input-group date" id="datepicker" data-target-input="nearest">
+                <input type="text" class="form-control datetimepicker-input" data-target="#datepicker" readonly />
+                <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
+                    <div class="input-group-text">&#128197;</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Time Picker -->
+        <div class="mt-4">
+            <span class="time-picker">Select Time</span>
+            <div class="time-list" id="timepicker">
+                <!-- Dynamically generated time options will be added here -->
+            </div>
+        </div>
+
+        <!-- Proceed Button -->
+        <div class="mt-4 pb-5">
+            <a id="proceedButton"  class="btn btn-primary" disabled>Proceed to Book</a>
+        </div>
+        
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery CDN (required for Bootstrap JavaScript components) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <!-- Bootstrap DateTimePicker JS (Assuming you're using Tempus Dominus for Bootstrap 4) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js">
+    </script>
+
+    <!-- Your custom scripts (if any) -->
+    <script>
+        // Initialize Date Picker
+        $(function () {
+            // Calculate the start and end dates for the allowed week
+            var startDate = moment();
+            var endDate = moment().add(6, 'days');
+    
+            // Generate an array of dates within the allowed week
+            var enabledDates = [];
+            var currentDate = moment(startDate);
+    
+            while (currentDate.isSameOrBefore(endDate)) {
+                enabledDates.push(currentDate.format('MM/DD/YYYY'));
+                currentDate.add(1, 'day');
+            }
+    
+            // Your existing date picker initialization code...
+            $('#datepicker').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate: moment(),
+                minDate: startDate,
+                maxDate: endDate,
+                enabledDates: enabledDates,
+                allowInputToggle: false,
+            });
+    
+            // Generate time options
+            var timeOptions = [];
+            var bookedSlots = ['09:00 AM', '09:45 AM', '08:30 AM']; // Example booked slots
+            var startTime = moment('08:00 AM', 'hh:mm A');
+            var endTime = moment('10:30 AM', 'hh:mm A');
+            var currentTime = moment(startTime);
+    
+            while (currentTime.isBefore(endTime)) {
+                var time = currentTime.format('hh:mm A');
+                var isBooked = bookedSlots.includes(time);
+    
+                timeOptions.push({ time: time, isBooked: isBooked });
+                currentTime.add(15, 'minutes');
+            }
+    
+            // Add time options to the time picker
+            var timePicker = $('#timepicker');
+            timeOptions.forEach(function (timeObj) {
+                var timeOption = $('<div class="time-option">' + timeObj.time + '</div>');
+                if (timeObj.isBooked) {
+                    timeOption.addClass('booked');
+                } else {
+                    timeOption.on('click', function () {
+                        // Handle time selection as needed
+                        $('.time-option').removeClass('active');
+                        timeOption.addClass('active');
+                        console.log('Selected time:', timeObj.time);
+                        var selectedDate = $('#datepicker').val();
+                        var selectedTime = timeObj.time;
+                        $('#datepicker').val(selectedDate + ' ' + selectedTime);
+                        // Enable the "Proceed to Book" button when both date and time are selected
+                        if ($('#datepicker').val() && $('.time-option.active').length > 0) {
+                            $('#proceedButton').prop('disabled', false);
+                        } else {
+                            $('#proceedButton').prop('disabled', true);
+                        }
+                    });
+                }
+                timePicker.append(timeOption);
+            });
+    
+            // Update the "Proceed to Book" button state on date change
+            $('#datepicker').on('change.datetimepicker', function () {
+                updateProceedButtonState();
+            });
+    
+            // Update the "Proceed to Book" button state on time option click
+            $('.time-option').on('click', function () {
+                // Handle time selection as needed
+                $('.time-option').removeClass('active');
+                $(this).addClass('active');
+                console.log('Selected time:', $(this).text());
+    
+                updateProceedButtonState();
+            });
+    
+            // Function to update the "Proceed to Book" button state
+            function updateProceedButtonState() {
+                if ($('#datepicker').val() && $('.time-option.active').length > 0) {
+                    $('#proceedButton').prop('disabled', false);
+                } else {
+                    $('#proceedButton').prop('disabled', true);
+                }
+            }
+    
+            // Navigate to user.html on "Proceed to Book" button click
+            $('#proceedButton').on('click', function () {
+                // console.log($('#datepicker').val())
+                // Check if both date and time are selected before navigating
+                if ($('#datepicker').val() && $('.time-option.active').length > 0) {
+                    window.location.href = 'user.html';
+                } else {
+                    alert('Please select a date and time before proceeding.');
+                }
+            });
+        }
+        );
+    </script>
+
+    <!-- <script>
+        $(function(){
+            var startDate = moment();
+            var endDate = moment().add(6, 'days');
+    
+            // Generate an array of dates within the allowed week
+            var enabledDates = [];
+            var currentDate = moment(startDate);
+    
+            while (currentDate.isSameOrBefore(endDate)) {
+                enabledDates.push(currentDate.format('MM/DD/YYYY'));
+                currentDate.add(1, 'day');
+            }
+    
+            // Your existing date picker initialization code...
+            $('#datepicker').datetimepicker({
+                format: 'DD/MM/YYYY',
+                defaultDate: moment(),
+                minDate: startDate,
+                maxDate: endDate,
+                enabledDates: enabledDates,
+                allowInputToggle: false,
+            });
+    
+            // Generate time options
+            var timeOptions = [];
+            var bookedSlots = ['09:00 AM', '09:45 AM', '08:30 AM']; // Example booked slots
+            var startTime = moment('08:00 AM', 'hh:mm A');
+            var endTime = moment('10:30 AM', 'hh:mm A');
+            var currentTime = moment(startTime);
+    
+            while (currentTime.isBefore(endTime)) {
+                var time = currentTime.format('hh:mm A');
+                var isBooked = bookedSlots.includes(time);
+    
+                timeOptions.push({ time: time, isBooked: isBooked });
+                currentTime.add(15, 'minutes');
+            }
+    
+            // Add time options to the time picker
+            var timePicker = $('#timepicker');
+
+            console.log(timePicker)
+            timeOptions.forEach(function (timeObj) {
+                var timeOption = $('<div class="time-option">' + timeObj.time + '</div>');
+                if (timeObj.isBooked) {
+                    timeOption.addClass('booked');
+                } else {
+                    timeOption.on('click', function () {
+                        // Handle time selection as needed
+                        $('.time-option').removeClass('active');
+                        timeOption.addClass('active');
+                        console.log('Selected time:', timeObj.time);
+                        
+                        var selectedDate = $('#datepicker').val();
+                        var selectedTime = timeObj.time;
+                        $('#datepicker').val(selectedDate + ' ' + selectedTime);
+
+                        // Enable the "Proceed to Book" button when both date and time are selected
+                        if ($('#datepicker').val() && $('.time-option.active').length > 0) {
+                            console.log("here")
+                            $('#proceedButton').prop('disabled', false);
+                        } else {
+                            console.log("else")
+
+                            $('#proceedButton').prop('disabled', true);
+                        }
+                    });
+                }
+                timePicker.append(timeOption);
+            });
+
+            // Update the "Proceed to Book" button state on date change
+            $('#datepicker').on('change.datetimepicker', function () {
+                updateProceedButtonState();
+            });
+    
+            // Update the "Proceed to Book" button state on time option click
+            $('.time-option').on('click', function () {
+                // Handle time selection as needed
+                $('.time-option').removeClass('active');
+                $(this).addClass('active');
+                // console.log('Selected time:', $(this).text());
+    
+                updateProceedButtonState();
+            });
+
+            // Function to update the "Proceed to Book" button state
+            function updateProceedButtonState() {
+                console.log($('#datepicker').val())
+                if ($('#datepicker').val() && $('.time-option.active').length > 0) {
+                    $('#proceedButton').prop('disabled', false);
+                } else {
+                    $('#proceedButton').prop('disabled', true);
+                }
+            }
+        })
+    </script> -->
+    
+
+</body>
+
+</html>

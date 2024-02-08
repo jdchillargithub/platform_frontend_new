@@ -1,0 +1,114 @@
+body {
+  background-color: #F7F7F6;
+}
+
+.date-title {
+  font-size: 18px;
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.date {
+  border-radius: 12px !important;
+}
+
+@media (max-width: 767px) {
+  .input-group.date {
+      position: relative;
+  }
+
+  .input-group-append {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0; /* Change from left to right */
+      z-index: 2;
+  }
+
+  .input-group-text {
+      height: 100%;
+      cursor: pointer;
+  }
+}
+
+.time-picker {
+  font-size: 18px;
+  font-weight: bold;
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.card {
+  border-radius: 25px;
+  background: #EBEBEA;
+  border: none;
+}
+
+.card-img {
+  border-radius: 70px !important;
+}
+
+.time-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.time-option {
+  width: calc(33.33% - 10px);
+  margin-bottom: 10px;
+  border-radius: 12px;
+  border: 0.5px solid #BBB;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.time-option.active {
+  background-color: #5d87ff;
+  color: white;
+}
+
+.time-option:hover {
+  background-color: #e2e6ea;
+}
+
+@media (max-width: 767px) {
+  .time-option.active {
+      background-color: #5d87ff;
+      color: white;
+  }
+}
+
+.btn {
+  width: 100%;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(to right, #60c8ff, #5d87ff);
+  color: white !important;
+}
+
+.btn:hover {
+  background: #5d87ff;
+}
+
+.time-option.booked {
+  background-color: #ccc;
+  /* Set the background color for booked slots */
+  color: #666;
+  /* Set the text color for booked slots */
+  cursor: not-allowed;
+  /* Set the cursor style for booked slots */
+}
+
+.datepicker .day.disabled {
+  background-color: #eee;
+  /* Set the background color for inactive dates */
+  color: #aaa;
+  /* Set the text color for inactive dates */
+  cursor: not-allowed;
+  /* Set the cursor style for inactive dates */
+}

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+
+    <!-- Your custom styles (if any) -->
+    <style>
+        body {
+            background-color: #F7F7F6;
+        }
+
+        .card {
+            border-radius: 25px;
+            background: #EBEBEA;
+            border: none;
+            margin-top: 50px;
+        }
+
+        .btn {
+            width: 100%;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(to right, #60c8ff, #5d87ff);
+            color: white;
+        }
+
+        .btn:hover {
+            background: #5d87ff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container mt-5">
+        <h3 class="text-center pb-3">Appointment Details</h3>
+
+        <!-- Customer Details Card -->
+        <div class="card">
+            <div class="card-body">
+                <form id="customerForm">
+                    <div class="form-group">
+                        <label for="username">Patient Name</label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="mobile">Contact Number</label>
+                        <input type="text" class="form-control" id="mobile" placeholder="Enter your mobile number">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary mt-5" onclick="validateForm()">Proceed</button>
+    </div>
+
+    <!-- Bootstrap JS, Popper.js, and jQuery CDN (required for Bootstrap JavaScript components) -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+
+    <script>
+        function validateForm() {
+            var username = document.getElementById("username").value;
+            var mobile = document.getElementById("mobile").value;
+
+            if (username.trim() === '' || mobile.trim() === '') {
+                alert("Please fill in all fields");
+            } else {
+                // Fields are not empty, navigate to success.html
+                window.location.href = "success.html";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

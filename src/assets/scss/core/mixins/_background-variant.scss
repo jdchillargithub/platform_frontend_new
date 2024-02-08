@@ -1,0 +1,30 @@
+// Contextual backgrounds
+@mixin bg-variant($parent, $color, $ignore-warning: true) {
+    #{$parent} {
+        background-color: #e9e9e9 !important;
+    }
+    a#{$parent},
+    button#{$parent} {
+        @include hover-focus {
+            background-color: #e9e9e9 !important;
+        }
+    }
+}
+
+@mixin bg-gradient-variant($parent, $color) {
+    #{$parent} {
+        background: #e9e9e9 !important;
+    }
+}
+
+@mixin bg-translucent-variant($parent, $color) {
+    #{$parent} {
+        background-color: #e9e9e9 !important;
+    }
+    a#{$parent},
+    button#{$parent} {
+        @include hover-focus {
+            background-color: #e9e9e9 !important;
+        }
+    }
+}
