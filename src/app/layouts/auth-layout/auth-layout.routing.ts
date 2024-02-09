@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
 
 import { HomeComponent } from '../../pages/Home/home.component';
+import { PatientAppointmentComponent } from 'src/app/pages/PatientAppointment/PatientAppointment.component';
 
 
 export const AuthLayoutRoutes: Routes = [
     { path: 'home',          component: HomeComponent },
-    // { path: 'login-otp',          component: LoginOtpComponent },
+    { path: 'patientAppointment',          component: PatientAppointmentComponent },
     // {path : 'CustomerDetails', component: CustomerDetailsComponent},
     // {path: 'EmailOtp', component: EmailOtpComponent},
     // {path: 'AdhaarVerification',component:AdhaarVerificationComponent},

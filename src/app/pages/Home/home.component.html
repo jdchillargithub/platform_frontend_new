@@ -27,13 +27,13 @@
             <div class="row no-gutters">
                 <!-- Left Section with Image -->
                 <div class="col-md-4">
-                    <img src="images/Wc2xbVeJl0d6cyfWGCxlvcsxxYogVqsJElJy5tvN.jpeg" class="card-img p-5"
-                        alt="Doctor Image">
+                    <img [src]="profileDetails?.profileImageUrl" class="card-img p-5" alt="Doctor Image">
+
                 </div>
                 <!-- Right Section with Name, Designation, and Consulting Fees -->
                 <div class="col-md-8 pl-5 pr-5 pt-3">
                     <div class="card-body">
-                        <h4 class="card-title"><b>Dr. Jabir Abdullakutty</b></h4>
+                        <h4 class="card-title"><b>Dr. {{ profileDetails?.doctor_name}}</b></h4>
                         <p class="card-tex">Senior Consultant & Director of Clinical Research (Cardiology)</p>
 
                         <div>
@@ -49,21 +49,30 @@
         <!-- Date Picker -->
         <div class="mt-4 ">
             <label for="datepicker">
-                <span class="date-title">Select Date</span>
+              <span class="date-title">Select Date</span>
             </label>
             <div class="input-group date" id="datepicker" data-target-input="nearest">
                 <input type="text" class="form-control datetimepicker-input" data-target="#datepicker" readonly />
                 <div class="input-group-append" data-target="#datepicker" data-toggle="datetimepicker">
-                    <div class="input-group-text">&#128197;</div>
-                </div>
+                <div class="input-group-text">&#128197;</div>
+              </div>
             </div>
-        </div>
-
+          </div>
+                   
         <!-- Time Picker -->
         <div class="mt-4">
             <span class="time-picker">Select Time</span>
             <div class="time-list" id="timepicker">
                 <!-- Dynamically generated time options will be added here -->
+                <!-- <div *ngFor="let slot of originalData" 
+                    [ngClass]="{'time-option': true, 'disabled': slot.booking_status === 1}"
+                    [style.cursor]="slot.booking_status === 1 ? 'not-allowed' : 'pointer'"
+                    [style.backgroundColor]="slot.booking_status === 1 ? '#ccc' : 'inherit'"> -->
+
+
+                <!-- <div *ngFor="let slot of originalData" class="time-option"> -->
+                    <!-- {{ slot.time_slot }}
+                </div> -->
             </div>
         </div>
 

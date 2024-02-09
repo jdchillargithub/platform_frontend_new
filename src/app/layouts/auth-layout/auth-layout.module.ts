@@ -6,6 +6,7 @@ import { AuthLayoutRoutes } from './auth-layout.routing';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { HomeComponent } from '../../pages/Home/home.component';
+import { PatientAppointmentComponent } from 'src/app/pages/PatientAppointment/PatientAppointment.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { HomeComponent } from '../../pages/Home/home.component';
   ],
   declarations: [
     HomeComponent,
-
+    PatientAppointmentComponent
   ]
 })
 export class AuthLayoutModule { }
