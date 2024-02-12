@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { DoctorsDataService } from 'src/app/services/doctors.service';
@@ -28,7 +28,8 @@ export class PatientAppointmentComponent {
     private doctorsData: DoctorsDataService,
     private router: Router,
     private timeSlotService: TimeSlotService,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
   validateForm() {
@@ -88,27 +89,17 @@ export class PatientAppointmentComponent {
       order_id: orderId,
       handler: (response: any) => {
         console.log(response);
+        this.ngZone.run(() => {
+        debugger
         if (response.razorpay_payment_id) {
           console.log('Payment successful');
-        //   this.cdr.detectChanges(); // Manually trigger change detection
-        //   window.location.reload()
-
-        //   // Move to the next page using Angular Router
-        //   Swal.fire({
-        //     title: 'Appointment Confirmed',
-        //     text: `Patient Name: ${this.booking_details.customerName}`,
-        //     icon: 'success',
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'Share',
-        //   });
         this.router.navigate(['/AppointmentConfirmed']);
 
          
         } else {
           console.log('Payment failed or was canceled');
         }
+    })
       },
       prefill: {
         name: this.username,
@@ -130,49 +121,6 @@ export class PatientAppointmentComponent {
       const rzp = new Razorpay(options);
       rzp.open();
     };
-  }
-  getAppointment() {
-    const data = {
-    //   orderId: this.orderID.OrderID
-    bookingId: 2
-    }
-
-    this.service.post(data, '/api/v1/booking/booking-confirmation-data').subscribe(
-      (response) => {
-        // console.log(`order details`, response);
-        if (response.statusCode === 200) {
-        //   this.orderDetails = response.data.orderData
-        this.booking_details = response.data
-        this.cdr.detectChanges(); // Manually trigger change detection
-
-        this.showSuccessModal();
-
-
-        console.log('success')
-        } else if(response.statusCode === 400){
-            this.snackbarService.showCustomSnackBarError(response.message);
-        }
-        },
-        (error) => {
-        
-
-        // Handle the error response
-        console.error('API call failed:', error);
-        this.snackbarService.showCustomSnackBarError(error);
-        
-      });
-  }
-
-  showSuccessModal() {
-    Swal.fire({
-      title: 'Appointment Confirmed',
-      text: `Patient Name: ${this.booking_details.customerName}`,
-      icon: 'success',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Share',
-    });
   }
 
 }
