@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EmailService } from 'src/app/services/email.service';
 import Swal from 'sweetalert2';
 import { SnackbarService } from 'src/app/services/snackbar.service';
+import { DoctorsDataService } from 'src/app/services/doctors.service';
+import { TimeSlotService } from 'src/app/services/time.service';
+import { formatDate } from '@angular/common';
 
 
 export interface PeriodicElement {
@@ -21,97 +24,111 @@ const ELEMENT_DATA: PeriodicElement[] = []; // Your initial data goes here
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  myForm: FormGroup;
   isLoading: boolean = false;
-  selectedDate: Date;
-
-  profileDetails: any = {};
-  workSlotDetails: any = {};
-  // phoneNumber: string;
-  originalData: PeriodicElement[] = ELEMENT_DATA; // Store the original data
-  timeOptions: string[] = ['09:00 AM', '09:30 AM', '10:00 AM', '10:30 AM']; // Add your dynamic time options here
-
-
+  doctor_details : any
+  timeSlots: string[] = [];
+  selectedDate: Date; // Property to store the selected date
+  selectedTimeSlot: string; // Property to store the selected time slot
   constructor(
     private fb: FormBuilder,
     private service: AuthService,
-    private router: Router,
-    private emailService: EmailService,
-    private route: ActivatedRoute,
-    private snackbarService: SnackbarService
+    private router: Router, private route: ActivatedRoute,
+    private doctorsData: DoctorsDataService,
+    private snackbarService: SnackbarService,
+    private timeSlotService : TimeSlotService
   ) { }
-
   ngOnInit() {
-
     this.getProfile();
-    this.getWorkSlots();
+    // this.getWorkSlots();
+    this.selectedDate = new Date();
+    // this.getWorkSlots();
   }
-
   ngOnDestroy() {
   }
-
   getProfile() {
     const data = {
-      phone: "7025791212"
+      phone: "8585858585"
     }
-
     this.service.post(data, '/api/v1/auth/profile').subscribe(
       (response) => {
         console.log(` success onlog`, response);
         if (response.statusCode === 200) {
-          this.profileDetails = response.data
-          
+          this.doctorsData.doctorsData = response.data
+          this.doctor_details = response.data
+          console.log('hellllloooooooooooooo',this.doctor_details)
+          this.getWorkSlots();
         }
         else if (response.status === 403) {
-          console.log("--------sdfsfdsfdsfsdfdsfdsfsdfsfsd")
           this.snackbarService.showCustomSnackBarError(response.message);
         }
       },
       (error) => {
-
         // Handle the error response
         console.error('API call failed:', error);
         this.snackbarService.showCustomSnackBarError(error);
       }
     );
   }
-
-
   getWorkSlots() {
+    const formattedDate = this.formatDate(this.selectedDate);
     const data = {
-      phone: "7025791212",
-      date: "2024-02-12"
-    }
-
+      phone: "8585858585",
+      date: formattedDate
+    };
     this.service.post(data, '/api/v1/work/get-work-slots').subscribe(
       (response) => {
         console.log(` work slots success onlog`, response);
         if (response.statusCode === 200) {
-          // this.workSlotDetails = response.data.workSlots
-          this.originalData = response.data.workSlots.map((slot: any, index: number) => ({
+          this.timeSlots = response.data.workSlots.map((slot: any) => ({
             time_slot: slot.time_slot,
             booking_status: slot.booking_status
           }));
-          
-        }
-        else if (response.status === 403) {
-          console.log("--------sdfsfdsfdsfsdfdsfdsfsdfsfsd")
+        } else if (response.status === 403) {
           this.snackbarService.showCustomSnackBarError(response.message);
         }
       },
       (error) => {
-
         // Handle the error response
         console.error('API call failed:', error);
         this.snackbarService.showCustomSnackBarError(error);
       }
     );
   }
+  onSubmit() {
+    // Access the selected date and time slot
+    console.log('Selected Date:', this.selectedDate);
+    console.log('Selected Time Slot:', this.selectedTimeSlot);
+    // Retrieve the current state from timeSlotService
+    const currentTimeSlotService = this.timeSlotService.timeSlotService || {};
 
-  
+    // Update the current state with selectedDate and selectedTimeSlot
+    const updatedTimeSlotService = {
+      ...currentTimeSlotService,
+      selectedDate: this.selectedDate,
+      selectedTimeSlot: this.selectedTimeSlot
+    };
 
- 
-Onsubmit(){
-  this.router.navigate(['login-otp']);
-}
+    // Store the updated state in timeSlotService
+    this.timeSlotService.timeSlotService = updatedTimeSlotService;
+
+    console.log('Updated timeSlotService:', this.timeSlotService.timeSlotService);
+
+    this.router.navigate(['/patientAppointment']);
+    // Perform further actions here, such as navigating to a different page or making API calls
+  }
+  // Method to handle selection of a time slot
+  selectTimeSlot(slot: string) {
+    this.selectedTimeSlot = slot;
+  }
+
+  onDateChange() {
+    // Call the getWorkSlots method with the selected date
+    if (this.selectedDate) {
+      this.getWorkSlots();
+    }
+  }
+
+  formatDate(date: Date): string {
+    return formatDate(date, 'yyyy-MM-dd', 'en-US');
+  }
 }
