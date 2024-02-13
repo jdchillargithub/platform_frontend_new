@@ -98,7 +98,7 @@ this.selectedDateString = this.formatDate(this.selectedDate)
   }
   onSubmit() {
     // Access the selected date and time slot
-    console.log('Selected Date:', this.selectedDate);
+    console.log('Selected Date:', this.selectedDateString);
     console.log('Selected Time Slot:', this.selectedTimeSlot);
     // Retrieve the current state from timeSlotService
     const currentTimeSlotService = this.timeSlotService.timeSlotService || {};
@@ -106,7 +106,7 @@ this.selectedDateString = this.formatDate(this.selectedDate)
     // Update the current state with selectedDate and selectedTimeSlot
     const updatedTimeSlotService = {
       ...currentTimeSlotService,
-      selectedDate: this.selectedDate,
+      selectedDate: this.selectedDateString,
       selectedTimeSlot: this.selectedTimeSlot
     };
 
