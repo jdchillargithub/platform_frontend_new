@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 import { BookingDataService } from 'src/app/services/booking.service';
 import { ModalService } from 'src/app/services/modal.service';
+import html2canvas from 'html2canvas';
 
 export interface PeriodicElement {
   ID: number;
@@ -81,6 +82,19 @@ share(){
     // confirmButtonText: 'Confirm',
     // cancelButtonText: 'Cancel',
 })
+}
+
+captureEntirePage() {
+  // Capture the screenshot of the entire HTML body
+  html2canvas(document.body).then((canvas) => {
+    // Convert the canvas to a data URL
+    const imgData = canvas.toDataURL('image/png');
+    // Create a link element to trigger the download of the image
+    const a = document.createElement('a');
+    a.href = imgData;
+    a.download = 'appointment_booking.png';
+    a.click();
+  });
 }
   
 }
