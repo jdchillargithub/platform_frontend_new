@@ -7,6 +7,21 @@
 
     <div class="container mt-5">
         <h3 class="text-center pb-3">Appointment Details</h3>
+        <!-- Additional Card for Date, Time, Doctor's Price, and Booking Price -->
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 text-center">
+                        <h6>Date: {{ timeSlotService.timeSlotService.selectedDate | date:'mediumDate' }}</h6>
+                        <h6>Time: {{ timeSlotService.timeSlotService.selectedTimeSlot.time_slot }}</h6>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <h6>Doctor's Price: ${{doctorsData.doctorsData.consultation_charge}}</h6>
+                        <h6>Booking Price: ${{ amount }}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Customer Details Card -->
         <div class="card">
             <div class="card-body">

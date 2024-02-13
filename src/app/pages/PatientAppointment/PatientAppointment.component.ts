@@ -23,14 +23,15 @@ export class PatientAppointmentComponent {
   booking_details: any;
   modal = false;
   data : string;
+  amount: number = 10;
 
   constructor(
     private http: HttpClient,
     private service: AuthService,
     private snackbarService: SnackbarService,
-    private doctorsData: DoctorsDataService,
+    public doctorsData: DoctorsDataService,
     private router: Router,
-    private timeSlotService: TimeSlotService,
+    public timeSlotService: TimeSlotService,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     private bookingData: BookingDataService
@@ -50,7 +51,7 @@ export class PatientAppointmentComponent {
         timeSlot: this.timeSlotService.timeSlotService.selectedTimeSlot.time_slot,
         customerName: this.username,
         customerPhone: this.mobile,
-        amount: 10,
+        amount: this.amount,
       };
 
       this.service.post(formValue, '/api/v1/booking/bookAppointment').subscribe(

@@ -75,11 +75,11 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
 share(){
   Swal.fire({
     title: 'Share',
-    html: ` <a href='https://wa.me/'><i class="fa-brands fa-whatsapp" style='font-size:80px;color:green;padding:8px;'></i></a>  <a><i class="fa-solid fa-envelope" style='font-size:80px;color:dark-grey;padding:8px;'></i></a>`,
+    html: ` <a href='https://wa.me/'><i class="fa-brands fa-whatsapp" style='font-size:80px;color:green;padding:8px;'></i></a>  <a href='https://mail.google.com/'><i class="fa-solid fa-envelope" style='font-size:80px;color:dark-grey;padding:8px;'></i></a>`,
 
-    showCancelButton: true,
-    confirmButtonText: 'Confirm',
-    cancelButtonText: 'Cancel',
+    // showCancelButton: true,
+    // confirmButtonText: 'Confirm',
+    // cancelButtonText: 'Cancel',
 })
 }
   
