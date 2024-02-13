@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedDate: Date = new Date();
   selectedDateString : string // Initializes selectedDate with the current date and time
   selectedTimeSlot: string; // Property to store the selected time slot
+  slot : boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -81,9 +82,18 @@ this.selectedDateString = this.formatDate(this.selectedDate)
       (response) => {
         console.log(` work slots success onlog`, response);
         if (response.statusCode === 200) {
+          if (response.data.availableWorkSlots === 0){
+            this.slot = true;
+            console.log("=-=-=-slot=-=-=",this.slot)
+          }
+          else{
+            this.slot = false;
+            console.log("=-=-=-slot=-=-=",this.slot)
+          }
           this.timeSlots = response.data.workSlots.map((slot: any) => ({
             time_slot: slot.time_slot,
             booking_status: slot.booking_status
+            
           }));
         } else if (response.status === 403) {
           this.snackbarService.showCustomSnackBarError(response.message);

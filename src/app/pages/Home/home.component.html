@@ -41,6 +41,7 @@
      <!-- Time Picker -->
      <div class="mt-4">
          <span class="time-picker">Select Time </span>
+         <p *ngIf="slot" style="color: red;font-weight: 800;" class="text-center mt-5 mb-5">No slot available!</p>
          <div class="time-list" id="timepicker">
            <!-- Loop through time slots and display each -->
            <div class="time-option "

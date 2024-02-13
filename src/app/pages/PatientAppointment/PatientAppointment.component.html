@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Details</title>
+
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <!-- Your custom styles (if any) -->
-</head>
-<body>
+
     <div class="container mt-5">
         <h3 class="text-center pb-3">Appointment Details</h3>
         <!-- Customer Details Card -->
         <div class="card">
             <div class="card-body">
                 <form id="customerForm">
+                    <p *ngIf="data"><b style="color: red;">{{data}}</b></p>
+
                     <div class="form-group">
                         <label for="username">Patient Name</label>
                         <input type="text" class="form-control" id="username" name="username" placeholder="Enter your name" [(ngModel)]="username">
@@ -41,18 +37,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
-        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-    <!-- <script>
-        function validateForm() {
-            var username = document.getElementById("username").value;
-            var mobile = document.getElementById("mobile").value;
-            if (username.trim() === '' || mobile.trim() === '') {
-                alert("Please fill in all fields");
-            } else {
-                // Fields are not empty, navigate to success.html
-                window.location.href = "success.html";
-            }
-        }
-    </script> -->
-</body>
-</html>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
