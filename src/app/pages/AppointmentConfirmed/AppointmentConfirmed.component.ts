@@ -47,8 +47,8 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
   // Call this function when the filter input changes
   getAppointment() {
     const data = {
-    //   orderId: this.orderID.OrderID
-    bookingId: 2
+      bookingId: this.bookingData.bookingData.bookingId
+    // bookingId: 2
     }
 
     this.service.post(data, '/api/v1/booking/booking-confirmation-data').subscribe(
