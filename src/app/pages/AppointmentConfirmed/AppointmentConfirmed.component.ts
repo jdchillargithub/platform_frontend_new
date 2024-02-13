@@ -6,6 +6,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
+import { BookingDataService } from 'src/app/services/booking.service';
 
 export interface PeriodicElement {
   ID: number;
@@ -32,7 +33,8 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
     private snackbarService: SnackbarService,
     private router: Router,
     private datePipe: DatePipe,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private bookingData: BookingDataService
   ) { }
 
   ngOnInit() {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { BookingDataService } from 'src/app/services/booking.service';
 import { DoctorsDataService } from 'src/app/services/doctors.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { TimeSlotService } from 'src/app/services/time.service';
@@ -29,7 +30,8 @@ export class PatientAppointmentComponent {
     private router: Router,
     private timeSlotService: TimeSlotService,
     private cdr: ChangeDetectorRef,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private bookingData: BookingDataService,
   ) {}
 
   validateForm() {
@@ -60,6 +62,7 @@ export class PatientAppointmentComponent {
               this.snackbarService.showCustomSnackBarSuccess(
                 response.message
               );
+              this.bookingData.bookingData = response.data
               // Call Razorpay function with orderId and amount
               this.initiateRazorpay(
                 response.data.orderId,
