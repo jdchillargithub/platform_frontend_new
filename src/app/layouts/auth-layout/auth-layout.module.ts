@@ -8,6 +8,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from '../../pages/Home/home.component';
 import { PatientAppointmentComponent } from 'src/app/pages/PatientAppointment/PatientAppointment.component';
 import { AppointmentConfirmedComponent } from 'src/app/pages/AppointmentConfirmed/AppointmentConfirmed.component';
+import { MyModalComponent } from 'src/app/pages/my-modal/my-modal.component';
 
 @NgModule({
   imports: [
@@ -20,7 +21,9 @@ import { AppointmentConfirmedComponent } from 'src/app/pages/AppointmentConfirme
   declarations: [
     HomeComponent,
     PatientAppointmentComponent,
-    AppointmentConfirmedComponent
+    AppointmentConfirmedComponent,
+    MyModalComponent
+    
   ]
 })
 export class AuthLayoutModule { }

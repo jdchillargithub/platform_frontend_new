@@ -27,8 +27,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   doctor_details : any
   timeSlots: string[] = [];
-  selectedDate: Date; // Property to store the selected date
+  selectedDate: Date = new Date();
+  selectedDateString : string // Initializes selectedDate with the current date and time
   selectedTimeSlot: string; // Property to store the selected time slot
+
   constructor(
     private fb: FormBuilder,
     private service: AuthService,
@@ -39,8 +41,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
   ngOnInit() {
     this.getProfile();
+this.selectedDateString = this.formatDate(this.selectedDate)
     // this.getWorkSlots();
-    this.selectedDate = new Date();
     // this.getWorkSlots();
   }
   ngOnDestroy() {
@@ -70,7 +72,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
   getWorkSlots() {
-    const formattedDate = this.formatDate(this.selectedDate);
+    const formattedDate = this.selectedDateString;
     const data = {
       phone: "8585858585",
       date: formattedDate
@@ -123,7 +125,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onDateChange() {
     // Call the getWorkSlots method with the selected date
-    if (this.selectedDate) {
+    console.log('selctected dateeeee',this.selectedDateString)
+    if (this.selectedDateString) {
       this.getWorkSlots();
     }
   }

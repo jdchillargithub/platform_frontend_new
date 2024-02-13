@@ -4,7 +4,7 @@
 <!-- Your custom styles (if any) -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container mt-5">
- <h3 class="text-center pb-3">BOOK APPOINTMENT </h3>
+ <h3 class="text-center pb-3">BOOK AN APPOINTMENT </h3>
  <!-- Top Card Split -->
  <div class="card">
      <div class="row no-gutters">
@@ -14,10 +14,11 @@
                  alt="Doctor Image">
          </div>
          <!-- Right Section with Name, Designation, and Consulting Fees -->
-         <div class="col-md-8 pl-5 pr-5 pt-3">
+         <div class="col-md-8 pl-5 pr-5 pt-3" *ngIf="doctor_details">
              <div class="card-body">
                  <h4 class="card-title"><b>{{doctor_details.doctor_name}}</b><br>
-                     <small>({{doctor_details.qualification}})</small></h4>
+                     <small>{{doctor_details.qualification}}</small></h4>
+                     <h6>{{doctor_details.designation}}</h6>
                  <p class="card-tex">{{doctor_details.description}}</p>
                  <div>
                      <h5 class="pt-5 ">Consulting Fees: ₹ {{doctor_details.consultation_charge}}</h5>
@@ -34,8 +35,8 @@
        </label>
        <div class="datepicker date input-group">
          <!-- <input type="date" class="form-control" id="fecha1" [(ngModel)]="selectedDate" required/> -->
-         <input type="date" class="form-control" id="fecha1" [(ngModel)]="selectedDate" (change)="onDateChange()" required />
-       </div>
+         <input type="date" class="form-control" id="fecha1" [(ngModel)]="selectedDateString" (change)="onDateChange()" required  />
+        </div>
      </div>
      <!-- Time Picker -->
      <div class="mt-4">

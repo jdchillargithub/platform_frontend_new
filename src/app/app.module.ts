@@ -33,7 +33,7 @@ import { CommonModule } from '@angular/common';
     AppRoutingModule,
     CommonModule ,
     ReactiveFormsModule,
-    MatSnackBarModule
+    MatSnackBarModule    
   ],
   declarations: [
     AppComponent,

@@ -7,6 +7,7 @@ import { PageEvent } from '@angular/material/paginator';
 import Swal from 'sweetalert2';
 import { DatePipe } from '@angular/common';
 import { BookingDataService } from 'src/app/services/booking.service';
+import { ModalService } from 'src/app/services/modal.service';
 
 export interface PeriodicElement {
   ID: number;
@@ -34,7 +35,7 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
     private router: Router,
     private datePipe: DatePipe,
     private route: ActivatedRoute,
-    private bookingData: BookingDataService
+    private bookingData: BookingDataService,
   ) { }
 
   ngOnInit() {
@@ -71,6 +72,15 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
         
       });
   }
+share(){
+  Swal.fire({
+    title: 'Share',
+    html: ` <a href='https://wa.me/'><i class="fa-brands fa-whatsapp" style='font-size:80px;color:green;padding:8px;'></i></a>  <a><i class="fa-solid fa-envelope" style='font-size:80px;color:dark-grey;padding:8px;'></i></a>`,
 
+    showCancelButton: true,
+    confirmButtonText: 'Confirm',
+    cancelButtonText: 'Cancel',
+})
+}
   
 }
