@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Success</title>
 
     <!-- Bootstrap CSS CDN -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -13,9 +7,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
 
-</head>
 
-<body>
+
+
 
     <div class="container">
         <div class="card">
@@ -30,13 +24,13 @@
 <div class="pt-3">
 	<label for="username">Patient Name : {{booking_details.customerName}}</label>
 <br>
-<label for="username">Booking Date : 13-february-2024</label>
+<label for="username">Booking Date : {{ booking_details.appointmentDate | date: 'dd-MMMM-yyyy' }}</label>
     <br>
-		<label for="username">Booking Time : {{booking_details.timeSlot}}    </label>
+		<label for="username">Booking Time : {{booking_details.appointmentTimeSlot}}    </label>
     <br>
-    <label for="username">Payment ID : XXXXXXX</label>
+    <label for="username">Payment ID : {{booking_details.paymentID}}</label>
     <br>
-    <label for="username">Payment Date & Time :  12-february-2024 at 7:00 PM </label>
+    <label for="username">Payment Date & Time : {{ booking_details.paymentDate | date: 'dd-MMMM-yyyy' }} at {{ booking_details.paymentDate | date: 'hh:mm a' }} </label>
 </div>
             <!-- Button Container -->
             <div class="button-container">
@@ -60,6 +54,3 @@
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
 
-</body>
-
-</html>

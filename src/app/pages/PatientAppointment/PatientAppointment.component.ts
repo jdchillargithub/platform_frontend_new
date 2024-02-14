@@ -2,6 +2,7 @@
 
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectorRef, Component, NgZone } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { BookingDataService } from 'src/app/services/booking.service';
@@ -24,6 +25,8 @@ export class PatientAppointmentComponent {
   modal = false;
   data : string;
   amount: number = 10;
+  customerForm!: FormGroup;
+  
 
   constructor(
     private http: HttpClient,
@@ -34,23 +37,37 @@ export class PatientAppointmentComponent {
     public timeSlotService: TimeSlotService,
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
-    private bookingData: BookingDataService
+    private bookingData: BookingDataService,
+    private formBuilder: FormBuilder
   ) {}
 
-  validateForm() {
-    if (!this.username || !this.mobile) {
-      this.data = 'Please fill in all fields';
-      // alert('Please fill in all fields');
-    } else if (!/^\d{10}$/.test(this.mobile)) {
-      this.data = 'Mobile number must be 10 digits and contain only numbers';
+  ngOnInit() {
+    this.customerForm = this.formBuilder.group({
+      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z .]+$')]],
+      mobile: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.minLength(10), Validators.maxLength(10)]]
+    });
+    console.log("=-=-=-=form=-=-",this.customerForm.valid)
+    
+  }
+  restrictToNumbers(event: any) {
+    const input = event.target;
+    const regex = /^[0-9]*$/; // Regular expression to match only numbers
 
-    } else {
+    if (!regex.test(input.value)) {
+        input.value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+    }
+}
+  validateForm() {
+    console.log("Form value:", this.customerForm.value);
+    console.log("Form status:", this.customerForm.status);
+        if (this.customerForm.valid) {
+
       const formValue = {
         doctorId: this.doctorsData.doctorsData.doctor_id,
         appointmentDate: this.timeSlotService.timeSlotService.selectedDate,
         timeSlot: this.timeSlotService.timeSlotService.selectedTimeSlot.time_slot,
-        customerName: this.username,
-        customerPhone: this.mobile,
+        customerName: this.customerForm.get('username')?.value,
+        customerPhone: this.customerForm.get('mobile')?.value,
         amount: this.amount,
       };
 
@@ -60,7 +77,7 @@ export class PatientAppointmentComponent {
             this.snackbarService.showCustomSnackBarSuccess(response.message);
             this.bookingData.bookingData = response.data;
             this.initiateRazorpay(response.data.orderId, response.data.amount);
-          } else if (response.statusCode === 400) {
+          } else {
             this.snackbarService.showCustomSnackBarError(response.message);
           }
         },
