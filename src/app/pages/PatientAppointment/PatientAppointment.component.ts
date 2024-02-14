@@ -116,11 +116,32 @@ restrictToAlphabets(event: any) {
       image: '',
       order_id: orderId,
       handler: (response: any) => {
-        console.log(response);
+        console.log('payemnt responseeeeeeeee',response);
         this.ngZone.run(() => {
           if (response.razorpay_payment_id) {
             console.log('Payment successful');
-            this.router.navigate(['/AppointmentConfirmed']);
+            const paymentvalue = {
+              paymentId: response.razorpay_payment_id,
+              orderId: response.razorpay_order_id
+            };
+      
+            this.service.post(paymentvalue, '/api/v1/payment/payment-update').subscribe(
+              (response) => {
+                if (response.statusCode === 200) {
+                  // this.snackbarService.showCustomSnackBarSuccess(response.message);
+                  this.router.navigate(['/AppointmentConfirmed']);
+                } else {
+                  this.snackbarService.showCustomSnackBarError(response.message);
+                }
+              },
+              (error) => {
+                console.error('API call failed:', error);
+                this.snackbarService.showCustomSnackBarError(error);
+              }
+            );
+          
+
+            
           } else {
             console.log('Payment failed or was canceled');
           }
