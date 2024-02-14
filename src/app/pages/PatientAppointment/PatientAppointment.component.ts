@@ -99,7 +99,7 @@ export class PatientAppointmentComponent {
       key: 'rzp_test_IpwktzfouNqxy7',
       amount: amount * 100,
       currency: 'INR',
-      name: 'Your Clinic Name',
+      name: this.doctorsData.doctorsData.doctor_name,
       description: 'Appointment Booking',
       image: '',
       order_id: orderId,

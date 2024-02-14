@@ -117,6 +117,7 @@
 .disabled {
   // Add your styles for disabled time slots
   opacity: 0.5; // This is just an example, you can customize it as needed
+  pointer-events: none; 
 }
 
 .datepicker input[type="date"]::-webkit-calendar-picker-indicator {

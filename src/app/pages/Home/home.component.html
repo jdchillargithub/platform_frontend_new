@@ -47,7 +47,7 @@
            <div class="time-option "
                 *ngFor="let slot of timeSlots"
                 (click)="selectTimeSlot(slot)"
-                [ngClass]="{'booked': slot.booking_status === 1, 'active': slot === selectedTimeSlot}">
+                [ngClass]="{'booked': slot.booking_status === 1, 'active': slot === selectedTimeSlot, 'disabled': slot.booking_status === 1}">
              {{ slot.time_slot }}
            </div>
          </div>
