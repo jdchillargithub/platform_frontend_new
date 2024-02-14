@@ -35,7 +35,7 @@
        </label>
        <div class="datepicker date input-group">
          <!-- <input type="date" class="form-control" id="fecha1" [(ngModel)]="selectedDate" required/> -->
-         <input type="date" class="form-control" id="fecha1" [(ngModel)]="selectedDateString" (change)="onDateChange()" required  />
+         <input type="date" class="form-control" id="fecha1" [(ngModel)]="selectedDateString" (change)="onDateChange()" required [min]="minDate" />
         </div>
      </div>
      <!-- Time Picker -->

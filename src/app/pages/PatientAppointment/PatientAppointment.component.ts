@@ -43,8 +43,8 @@ export class PatientAppointmentComponent {
 
   ngOnInit() {
     this.customerForm = this.formBuilder.group({
-      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z .]+$')]],
-      mobile: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.minLength(10), Validators.maxLength(10)]]
+      username: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]],
+      mobile: ['', [Validators.required, Validators.pattern('^[0-9]+$'), Validators.min(10)]]
     });
     console.log("=-=-=-=form=-=-",this.customerForm.valid)
     
@@ -56,7 +56,19 @@ export class PatientAppointmentComponent {
     if (!regex.test(input.value)) {
         input.value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
     }
+    if (input.value.length > 10) {
+      input.value = input.value.slice(0, 10); // Limit to the first 10 characters
+  }
 }
+restrictToAlphabets(event: any) {
+  const input = event.target;
+  const regex = /^[a-zA-Z ]*$/; // Regular expression to match only alphabets and spaces
+
+  if (!regex.test(input.value)) {
+      input.value = input.value.replace(/[^a-zA-Z ]/g, ''); // Remove non-alphabetic characters
+  }
+}
+
   validateForm() {
     console.log("Form value:", this.customerForm.value);
     console.log("Form status:", this.customerForm.status);
@@ -67,7 +79,7 @@ export class PatientAppointmentComponent {
         appointmentDate: this.timeSlotService.timeSlotService.selectedDate,
         timeSlot: this.timeSlotService.timeSlotService.selectedTimeSlot.time_slot,
         customerName: this.customerForm.get('username')?.value,
-        customerPhone: this.customerForm.get('mobile')?.value,
+        customerPhone: this.customerForm.get('mobile')?.value.slice(0, 10),
         amount: this.amount,
       };
 
@@ -116,7 +128,7 @@ export class PatientAppointmentComponent {
       },
       prefill: {
         name: this.username,
-        contact: this.mobile,
+        contact: this.customerForm.get('mobile')?.value.slice(0, 10),
         email: 'your@email.com',
       },
       theme: {

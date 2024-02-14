@@ -31,7 +31,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedDateString : string // Initializes selectedDate with the current date and time
   selectedTimeSlot: string; // Property to store the selected time slot
   slot : boolean = false;
-
+  minDate: string = new Date().toISOString().split('T')[0];
+  maxDate: string = this.calculateMaxDate();
   constructor(
     private fb: FormBuilder,
     private service: AuthService,
@@ -134,11 +135,20 @@ this.selectedDateString = this.formatDate(this.selectedDate)
   }
 
   onDateChange() {
+    this.minDate = this.selectedDateString; // Set the minimum date to the selected date
+    this.maxDate = this.calculateMaxDate();
+
     // Call the getWorkSlots method with the selected date
     console.log('selctected dateeeee',this.selectedDateString)
     if (this.selectedDateString) {
       this.getWorkSlots();
     }
+  }
+  calculateMaxDate(): string {
+    const currentDate = new Date();
+    const maxDate = new Date(currentDate);
+    maxDate.setDate(currentDate.getDate() + 7); // Add 7 days to the current date
+    return maxDate.toISOString().split('T')[0];
   }
 
   formatDate(date: Date): string {

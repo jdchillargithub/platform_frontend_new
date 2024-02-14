@@ -107,5 +107,9 @@ captureEntirePage() {
     a.click();
   });
 }
+close(){
+  this.router.navigate(['/home']); // Assuming '/' is the route for the home page
+
+}
   
 }

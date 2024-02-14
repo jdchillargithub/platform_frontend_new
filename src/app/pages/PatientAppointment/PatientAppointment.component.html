@@ -32,7 +32,7 @@
             
             <div class="form-group">
                 <label for="username">Patient Name</label>
-                <input type="text" class="form-control" id="username" formControlName="username" placeholder="Enter your name">
+                <input type="text" class="form-control" id="username" formControlName="username" placeholder="Enter your name" (input)="restrictToAlphabets($event)">
                 <small *ngIf="customerForm.get('username').hasError('required') && customerForm.get('username').touched" style="color: red;">Patient name is required</small>
                 <small *ngIf="customerForm.get('username').hasError('pattern') && customerForm.get('username').touched" style="color: red;">Patient name must contain only alphabets</small>
             </div>
@@ -43,7 +43,7 @@
                 <small *ngIf="customerForm.get('mobile').hasError('required') && customerForm.get('mobile').touched" style="color: red;margin-left: 8px;">Phone number is required.</small>
                 <small *ngIf="customerForm.get('mobile').hasError('pattern') && customerForm.get('mobile').touched" style="color: red;margin-left: 8px;">Phone number must contain only numbers.</small>
                 <small *ngIf="customerForm.get('mobile').hasError('minlength') && customerForm.get('mobile').touched" style="color: red;margin-left: 8px;">Phone number must be at least 10 digits.</small>
-                <small *ngIf="customerForm.get('mobile').hasError('maxlength') && customerForm.get('mobile').touched" style="color: red;margin-left: 8px;">Phone number must not exceed 10 digits.</small>
+                <!-- <small *ngIf="customerForm.get('mobile').hasError('maxlength') && customerForm.get('mobile').touched" style="color: red;margin-left: 8px;">Phone number must not exceed 10 digits.</small> -->
             </div>
             
             
