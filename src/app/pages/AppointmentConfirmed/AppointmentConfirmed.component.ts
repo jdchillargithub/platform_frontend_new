@@ -27,6 +27,8 @@ const ELEMENT_DATA: PeriodicElement[] = []; // Your initial data goes here
 export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
 
     booking_details : any
+    whatsapp_message_1: string;
+    whatsapp_message_2: string;
 
 
   constructor(
@@ -59,6 +61,9 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
         if (response.statusCode === 200) {
         //   this.orderDetails = response.data.orderData
         this.booking_details = response.data
+        this.whatsapp_message_1 = 'Dear \n' + this.booking_details.customerName + ',';
+        this.whatsapp_message_2 =
+          " We are pleased to confirm your appointment with "+this.booking_details.doctorName+" on "+this.booking_details.appointmentDate+" at "+this.booking_details.appointmentTimeSlot+".";
         console.log('success')
         } else if(response.statusCode === 400){
             this.snackbarService.showCustomSnackBarError(response.message);
@@ -73,10 +78,14 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
         
       });
   }
+
+
 share(){
   Swal.fire({
     title: 'Share',
-    html: ` <a href='https://wa.me/'><i class="fa-brands fa-whatsapp" style='font-size:80px;color:green;padding:8px;'></i></a>  <a href='https://mail.google.com/'><i class="fa-solid fa-envelope" style='font-size:80px;color:dark-grey;padding:8px;'></i></a>`,
+    html: ` <a href='https://wa.me/${this.booking_details.customerPhone}?text=${encodeURIComponent(
+      this.whatsapp_message_1 + this.whatsapp_message_2
+    )}'><i class="fa-brands fa-whatsapp" style='font-size:80px;color:green;padding:8px;'></i></a> `,
 
     // showCancelButton: true,
     // confirmButtonText: 'Confirm',
@@ -86,7 +95,9 @@ share(){
 
 captureEntirePage() {
   // Capture the screenshot of the entire HTML body
-  html2canvas(document.body).then((canvas) => {
+  const cardElement = document.getElementById('cardToCapture');
+
+  html2canvas(cardElement).then((canvas) => {
     // Convert the canvas to a data URL
     const imgData = canvas.toDataURL('image/png');
     // Create a link element to trigger the download of the image

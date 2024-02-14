@@ -74,7 +74,7 @@ export class PatientAppointmentComponent {
       this.service.post(formValue, '/api/v1/booking/bookAppointment').subscribe(
         (response) => {
           if (response.statusCode === '200') {
-            this.snackbarService.showCustomSnackBarSuccess(response.message);
+            // this.snackbarService.showCustomSnackBarSuccess(response.message);
             this.bookingData.bookingData = response.data;
             this.initiateRazorpay(response.data.orderId, response.data.amount);
           } else {
