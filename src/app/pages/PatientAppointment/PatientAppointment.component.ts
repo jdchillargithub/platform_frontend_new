@@ -72,6 +72,11 @@ export class PatientAppointmentComponent {
     }
   }
 
+  goBack() {
+    this.router.navigate(['/home']); // Assuming '/' is the route for the home page
+  }
+  
+
   initiateRazorpay(orderId: string, amount: number) {
     const options = {
       key: 'rzp_test_IpwktzfouNqxy7',
