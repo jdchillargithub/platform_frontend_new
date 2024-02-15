@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  razorpayKey: 'rzp_test_IpwktzfouNqxy7',
 };

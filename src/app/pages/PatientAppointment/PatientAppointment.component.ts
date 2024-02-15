@@ -9,6 +9,7 @@ import { BookingDataService } from 'src/app/services/booking.service';
 import { DoctorsDataService } from 'src/app/services/doctors.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { TimeSlotService } from 'src/app/services/time.service';
+import { environment } from 'src/environments/environment';
 
 declare var Razorpay: any;
 declare var Swal: any;
@@ -131,7 +132,7 @@ restrictToAlphabets(event: any) {
 
   initiateRazorpay(orderId: string, amount: number) {
     const options = {
-      key: 'rzp_test_IpwktzfouNqxy7',
+      key: environment.razorpayKey,
       amount: amount * 100,
       currency: 'INR',
       name: this.doctorsData.doctorsData.doctor_name,
