@@ -52,14 +52,37 @@ export class PatientAppointmentComponent {
   restrictToNumbers(event: any) {
     const input = event.target;
     const regex = /^[0-9]*$/; // Regular expression to match only numbers
-
+  
     if (!regex.test(input.value)) {
-        input.value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
+      input.value = input.value.replace(/[^0-9]/g, ''); // Remove non-numeric characters
     }
+  
+    // Check if the input value length exceeds 10 characters
     if (input.value.length > 10) {
-      input.value = input.value.slice(0, 10); // Limit to the first 10 characters
+      // Truncate the input value to the first 10 characters
+      input.value = input.value.slice(0, 10);
+    }
+  
+    // Update the input value in the form control
+    this.customerForm.get('mobile')?.setValue(input.value);
+  
+    // Clear the errors for 'pattern' and 'minlength' before setting new errors
+    this.customerForm.get('mobile')?.setErrors(null);
+  
+    // Check if the input value is not a valid number
+    if (!regex.test(input.value)) {
+      // Set pattern error
+      this.customerForm.get('mobile')?.setErrors({ pattern: true });
+    }
+  
+    // Check if the input value length is less than 10
+    if (input.value.length < 10) {
+      // Set minlength error
+      this.customerForm.get('mobile')?.setErrors({ minlength: true });
+    }
   }
-}
+  
+  
 restrictToAlphabets(event: any) {
   const input = event.target;
   const regex = /^[a-zA-Z ]*$/; // Regular expression to match only alphabets and spaces
