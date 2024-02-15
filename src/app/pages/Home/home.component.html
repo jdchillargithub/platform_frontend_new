@@ -19,7 +19,15 @@
                  <h4 class="card-title"><b>{{doctor_details.doctor_name}}</b><br>
                      <small>{{doctor_details.qualification}}</small></h4>
                      <h6>{{doctor_details.designation}}</h6>
-                 <p class="card-tex">{{doctor_details.description}}</p>
+<!-- ... (previous HTML code) ... -->
+<div class="card-tex">
+  <div [class.truncated]="isTruncated" [class.expanded]="!isTruncated">
+    {{ doctor_details.description }}
+  </div>
+  <button *ngIf="isTruncated" (click)="toggleDescription()" class="toggleBtn ">View More</button>
+  <button *ngIf="!isTruncated" (click)="toggleDescription()" class="toggleBtn ">View Less</button>
+</div>
+<!-- ... (remaining HTML code) ... -->
                  <div>
                      <h5 class="pt-5 ">Consulting Fees: ₹ {{doctor_details.consultation_charge}}</h5>
                  </div><!-- Add more details as needed -->

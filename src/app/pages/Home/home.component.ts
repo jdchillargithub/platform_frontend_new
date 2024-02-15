@@ -33,6 +33,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   slot : boolean = false;
   minDate: string = new Date().toISOString().split('T')[0];
   maxDate: string = this.calculateMaxDate();
+  isTruncated: boolean = true; // Initially set to truncated
+
   constructor(
     private fb: FormBuilder,
     private service: AuthService,
@@ -53,6 +55,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     // this.getWorkSlots();
   }
   ngOnDestroy() {
+  }
+  toggleDescription() {
+    this.isTruncated = !this.isTruncated;
   }
   getProfile() {
     const data = {

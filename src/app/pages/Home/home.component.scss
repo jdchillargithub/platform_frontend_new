@@ -129,3 +129,21 @@
   background-position: right center; /* Align the image to the right */
 
 }
+.truncated {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+}
+
+.expanded {
+  -webkit-line-clamp: initial; /* Show all lines when expanded */
+}
+.toggleBtn{
+  padding: 8px;
+width: 100px;
+  margin-top: 8px;
+  text-decoration: underline;
+  border: none;
+}
