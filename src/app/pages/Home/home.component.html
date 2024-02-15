@@ -60,9 +60,9 @@
            </div>
          </div>
        </div>
-     <!-- Proceed Button -->
-     <div class="mt-4 pb-5">
-       <button type="submit" class="btn btn-primary" [disabled]="!selectedDate || !selectedTimeSlot">Proceed to Book</button>
-     </div>
+    <!-- Proceed Button -->
+    <div class="mt-4 pb-5" *ngIf="!slot">
+      <button type="submit" class="btn btn-primary" [disabled]="!selectedDate || !selectedTimeSlot">Proceed to Book</button>
+    </div>
    </form>
 </div>
