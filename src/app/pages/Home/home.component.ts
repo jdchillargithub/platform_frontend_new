@@ -43,8 +43,13 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
   ngOnInit() {
     this.getProfile();
-this.selectedDateString = this.formatDate(this.selectedDate)
-    // this.getWorkSlots();
+    this.selectedDateString = this.formatDate(this.selectedDate);
+
+    // Set the initial minDate to today
+    this.minDate = this.formatDate(new Date());
+  
+    // Calculate and set the initial maxDate
+    this.calculateMaxDate();
     // this.getWorkSlots();
   }
   ngOnDestroy() {
@@ -135,21 +140,26 @@ this.selectedDateString = this.formatDate(this.selectedDate)
   }
 
   onDateChange() {
-    this.minDate = this.selectedDateString; // Set the minimum date to the selected date
-    this.maxDate = this.calculateMaxDate();
-
-    // Call the getWorkSlots method with the selected date
-    console.log('selctected dateeeee',this.selectedDateString)
+    // Set the minimum date to today
+    this.minDate = this.formatDate(new Date());
+    this.calculateMaxDate();
     if (this.selectedDateString) {
       this.getWorkSlots();
     }
   }
+  
   calculateMaxDate(): string {
     const currentDate = new Date();
     const maxDate = new Date(currentDate);
-    maxDate.setDate(currentDate.getDate() + 7); // Add 7 days to the current date
-    return maxDate.toISOString().split('T')[0];
+    maxDate.setDate(currentDate.getDate() + 7);
+  
+    // Return the formatted maxDate
+    return this.formatDate(maxDate);
   }
+
+  
+
+  
 
   formatDate(date: Date): string {
     return formatDate(date, 'yyyy-MM-dd', 'en-US');
