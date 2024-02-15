@@ -83,7 +83,7 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
 share(){
   Swal.fire({
     title: 'Share',
-    html: ` <a href='https://wa.me/${this.booking_details.customerPhone}?text=${encodeURIComponent(
+    html: ` <a href='https://wa.me/+91${this.booking_details.customerPhone}?text=${encodeURIComponent(
       this.whatsapp_message_1 + this.whatsapp_message_2
     )}'><i class="fa-brands fa-whatsapp" style='font-size:80px;color:green;padding:8px;'></i></a> `,
 
