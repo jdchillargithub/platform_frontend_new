@@ -9,15 +9,15 @@
  <div class="card">
      <div class="row no-gutters">
          <!-- Left Section with Image -->
-         <div class="col-md-4">
-             <img src="https://www.chillarpayments.com/Demo/Direct-Book/images/Wc2xbVeJl0d6cyfWGCxlvcsxxYogVqsJElJy5tvN.jpeg" class="card-img p-5"
+         <div class="col-md-4 text-center p-2">
+             <img src="https://www.chillarpayments.com/Demo/Direct-Book/images/Wc2xbVeJl0d6cyfWGCxlvcsxxYogVqsJElJy5tvN.jpeg" class="card-img  img=responsivep-5"
                  alt="Doctor Image">
          </div>
          <!-- Right Section with Name, Designation, and Consulting Fees -->
-         <div class="col-md-8 pl-5 pr-5 pt-3" *ngIf="doctor_details">
+         <div class="col-md-8 text-center" *ngIf="doctor_details">
              <div class="card-body">
-                 <h4 class="card-title"><b>{{doctor_details.doctor_name}}</b><br>
-                     <small>{{doctor_details.qualification}}</small></h4>
+                 <h4 class="card-title"><b>{{doctor_details.doctor_name}}</b><br></h4>
+                     <h6>{{doctor_details.qualification}}</h6>
                      <h6>{{doctor_details.designation}}</h6>
 <!-- ... (previous HTML code) ... -->
 <div class="card-tex">
@@ -29,7 +29,7 @@
 </div>
 <!-- ... (remaining HTML code) ... -->
                  <div>
-                     <h5 class="pt-5 ">Consulting Fees: ₹ {{doctor_details.consultation_charge}}</h5>
+                     <h5 class="pt-1 ">Consulting Fees: ₹ {{doctor_details.consultation_charge}}</h5>
                  </div><!-- Add more details as needed -->
              </div>
          </div>

@@ -46,7 +46,7 @@
 }
 
 .card-img {
-  border-radius: 70px !important;
+  border-radius: 20px !important;
 }
 
 .time-list {
@@ -146,4 +146,11 @@ width: 100px;
   margin-top: 8px;
   text-decoration: underline;
   border: none;
+}
+
+
+@media (max-width: 500px) {
+  .card img {
+      width: 20%;
+  }
 }
