@@ -18,7 +18,7 @@ export class AuthService {
   // baseURL = "";
 
   /* UAT LINK */
-  baseURL = "http://35.154.16.95"
+  baseURL = "http://139.59.76.214:8081"
 
 
   // 1. Generic API Methods
