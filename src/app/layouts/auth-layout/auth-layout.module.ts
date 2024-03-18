@@ -9,6 +9,7 @@ import { HomeComponent } from '../../pages/Home/home.component';
 import { PatientAppointmentComponent } from 'src/app/pages/PatientAppointment/PatientAppointment.component';
 import { AppointmentConfirmedComponent } from 'src/app/pages/AppointmentConfirmed/AppointmentConfirmed.component';
 import { MyModalComponent } from 'src/app/pages/my-modal/my-modal.component';
+import { ProfessionalListComponent } from 'src/app/pages/Professional-list/professional-list.component';
 
 @NgModule({
   imports: [
@@ -22,8 +23,8 @@ import { MyModalComponent } from 'src/app/pages/my-modal/my-modal.component';
     HomeComponent,
     PatientAppointmentComponent,
     AppointmentConfirmedComponent,
-    MyModalComponent
-    
+    MyModalComponent,
+    ProfessionalListComponent    
   ]
 })
 export class AuthLayoutModule { }

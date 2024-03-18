@@ -26,6 +26,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = false;
   doctor_details : any
+  CurrentDocId : any
   timeSlots: string[] = [];
   selectedDate: Date = new Date();
   selectedDateString : string // Initializes selectedDate with the current date and time
@@ -46,6 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getProfile();
     this.selectedDateString = this.formatDate(this.selectedDate);
+    this.CurrentDocId=localStorage.getItem("DoctorId")
 
     // Set the initial minDate to today
     this.minDate = this.formatDate(new Date());
@@ -60,10 +62,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.isTruncated = !this.isTruncated;
   }
   getProfile() {
-    const data = {
-      phone: "8585858585"
-    }
-    this.service.post(data, '/api/v1/auth/profile').subscribe(
+    // const data = {
+    //   phone: "8585858585"
+    // }
+    this.service.post({ phone: "8585858585",encryptedPhone:this.CurrentDocId}, '/api/v1/auth/profile').subscribe(
       (response) => {
         console.log(` success onlog`, response);
         if (response.statusCode === 200) {

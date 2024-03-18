@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors List</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row p-1">
+            <div class="col-lg-4 col-md-6 col-sm-6 p-3" *ngFor="let professional of professionals">
+                <div class="card p-1">
+                    <img class="card-img-top" src="https://static.vecteezy.com/system/resources/thumbnails/028/287/384/small/a-mature-indian-male-doctor-on-a-white-background-ai-generated-photo.jpg" alt="Card image cap">
+                    <div class="card-body">
+                      <h5 class="card-title">{{ professional.doctor_name }}</h5>
+                      <p class=" text-dark fw-bold">{{ professional.department_name }}</p>
+                      <button (click)="routeClick(professional.encryptedPhone)"  class="btn btn-primary">Go</button>
+                    </div>
+                  </div>
+            </div>
+        </div>        
+      </div>
+      
+</body>
+</html>
