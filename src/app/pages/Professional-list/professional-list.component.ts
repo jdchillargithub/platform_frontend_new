@@ -36,7 +36,9 @@ export class ProfessionalListComponent {
   }
 
   fetchProfessionalList() {
-    this.service.post({}, "/api/v1/customer/list-doctors").subscribe((data) => {
+   const businessId= localStorage.getItem("businessId");
+
+    this.service.post({entityId:businessId}, "/api/v1/customer/list-doctors").subscribe((data) => {
       // console.log("Professional==>", data);
       if (data.statusCode == 200) {
         console.log("Professional==>", data);
@@ -53,19 +55,5 @@ export class ProfessionalListComponent {
        this.router.navigate(["/doctor"],{ queryParams: {id: DocId }});
     }
   }
-  // routeClick(DocId: string) {
-  //   console.log("FN call==>", DocId);
-  //   if (DocId) {
-  //     localStorage.setItem("DoctorId", DocId);
-  //     this.router
-  //       .navigate(["/doctor"],{ queryParams: {ID: DocId }})
-  //       .then(() => {
-  //         console.log("Navigation successful");
-  //         this.cdr.detectChanges(); // Manually trigger change detection
-  //       })
-  //       .catch((error) => {
-  //         console.error("Navigation failed:", error);
-  //       });
-  //   }
-  // }
+ 
 }

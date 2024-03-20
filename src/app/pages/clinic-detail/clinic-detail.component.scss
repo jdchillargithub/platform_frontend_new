@@ -1,0 +1,25 @@
+.descriptionDiv {
+  width: 100%;
+  height: fit-content;
+}
+
+.truncated {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  color: black;
+}
+
+.expanded {
+    -webkit-line-clamp: initial; /* Show all lines when expanded */
+    color: black;
+  }
+
+  .toggleBtn{
+    font-size: 10px;
+    width: 80px;
+    height: 20px;
+    padding: 1px;
+  }
