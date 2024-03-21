@@ -45,9 +45,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     private timeSlotService : TimeSlotService
   ) { }
   ngOnInit() {
+    this.CurrentDocId=localStorage.getItem("DoctorId")
     this.getProfile();
     this.selectedDateString = this.formatDate(this.selectedDate);
-    this.CurrentDocId=localStorage.getItem("DoctorId")
 
     // Set the initial minDate to today
     this.minDate = this.formatDate(new Date());
