@@ -23,12 +23,8 @@
         /> -->
         <img
           *ngIf="doctor_details.doctor_name"
-          [src]="
-            doctor_details.doctor_name === 'Dr. Jabir Abdullakkutty'
-              ? 'https://www.chillarpayments.com/Demo/Direct-Book/images/Wc2xbVeJl0d6cyfWGCxlvcsxxYogVqsJElJy5tvN.jpeg'
-              : 'https://static.vecteezy.com/system/resources/thumbnails/028/287/384/small/a-mature-indian-male-doctor-on-a-white-background-ai-generated-photo.jpg'
-          "
-          class="card-img img=responsivep-5"
+         src="{{doctor_details.profileImageUrl}}"
+          class="card-img"
           alt="Doctor Image"
         />
       </div>
@@ -125,7 +121,7 @@
     <div class="mt-4 pb-5" *ngIf="!slot">
       <button
         type="submit"
-        class="btn btn-primary"
+        class="btn "
         [disabled]="!selectedDate || !selectedTimeSlot"
       >
         Proceed to Book

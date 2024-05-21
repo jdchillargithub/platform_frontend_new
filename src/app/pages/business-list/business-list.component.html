@@ -15,16 +15,16 @@
           class="col-lg-4 col-md-6 col-sm-6 p-3"
           *ngFor="let business of businessListData"
         >
-          <div class="card p-1 shadow-lg border">
+          <div class="card p-1 shadow-lg border ">
             <img
-              class="card-img-top"
-              src="https://images.unsplash.com/photo-1587351021355-a479a299d2f9?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+              class="card-img-top clinicImg"
+              src="{{business.imageUrl}}"
               alt="Card image cap"
             />
             <div class="card-body">
               <h5 class="card-title">{{ business.entity_name }}</h5>
               <button
-                (click)="routeClick(business.entity_id)"
+                (click)="routeClick(business.entity_id,business.encryptedEntityId)"
                 class="btn btn-primary"
               >
                 Book Doctor

@@ -1,59 +1,83 @@
+<!-- Bootstrap CSS CDN -->
+<link
+  rel="stylesheet"
+  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+  crossorigin="anonymous"
+/>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
 
+<div class="container">
+  <div class="card" id="cardToCapture">
+    <p>
+      <a (click)="close()" style="cursor: pointer"
+        ><i
+          class="fa-regular fa-circle-xmark"
+          style="float: right !important; font-size: 24px"
+        ></i
+      ></a>
+    </p>
+    <!-- Success Animation (Tick Mark) -->
+    <div class="success-animation">&#10004;</div>
 
-    <!-- Bootstrap CSS CDN -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-        crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Success Message -->
+    <div class="success-message">Appointment Confirmed</div>
 
-
-
-
-
-
-    <div class="container">
-        <div class="card" id="cardToCapture" >
-            <p><a (click)="close();" style="cursor: pointer;"><i class="fa-regular fa-circle-xmark" style="float: right !important;font-size: 24px;"></i></a></p>
-            <!-- Success Animation (Tick Mark) -->
-            <div class="success-animation">&#10004;</div>
-
-            <!-- Success Message -->
-            <div class="success-message">
-                Appointment Confirmed
-            </div>
-	
-<div class="pt-3">
-    <label for="username">Doctor Name : {{booking_details.doctorName}}</label>
-<br>
-	<label for="username">Patient Name : {{booking_details.customerName}}</label>
-<br>
-<label for="username">Booking Date : {{ booking_details.appointmentDate | date: 'dd-MMMM-yyyy' }}</label>
-    <br>
-		<label for="username">Booking Time : {{booking_details.appointmentTimeSlot}}    </label>
-    <br>
-    <label for="username">Payment ID : {{booking_details.paymentID}}</label>
-    <br>
-    <label for="username">Payment Date & Time : {{ booking_details.paymentDate | date: 'dd-MMMM-yyyy' }} at {{ booking_details.paymentDate | date: 'hh:mm a' }} </label>
-</div>
-            <!-- Button Container -->
-            <div class="button-container">
-                <!-- Share Button -->
-                <button class="btn btn-primary mr-2" (click)="share()" >Share</button>
-
-                <!-- Save Button -->
-                <button class="btn btn-success" (click)="captureEntirePage()">Save</button>
-            </div>
-        </div>
+    <div class="pt-3">
+      <label for="username"
+        >Doctor Name : {{ booking_details.doctorName }}</label
+      >
+      <br />
+      <label for="username"
+        >Patient Name : {{ booking_details.customerName }}</label
+      >
+      <br />
+      <label for="username"
+        >Booking Date :
+        {{ booking_details.appointmentDate | date : "dd-MMMM-yyyy" }}</label
+      >
+      <br />
+      <label for="username"
+        >Booking Time : {{ booking_details.appointmentTimeSlot }}
+      </label>
+      <br />
+      <label for="username">Payment ID : {{ booking_details.paymentID }}</label>
+      <br />
+      <label for="username"
+        >Payment Date & Time :
+        {{ booking_details.paymentDate | date : "dd-MMMM-yyyy" }} at
+        {{ booking_details.paymentDate | date : "hh:mm a" }}
+      </label>
     </div>
+    <!-- Button Container -->
+    <div class="button-container">
+      <!-- Share Button -->
+      <button class="btn btn-primary mr-2" (click)="share()">Share</button>
 
-    <!-- Bootstrap JS, Popper.js, and jQuery CDN (required for Bootstrap JavaScript components) -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
+      <!-- Save Button -->
+      <button class="btn btn-success" (click)="captureEntirePage()">
+        Save
+      </button>
+    </div>
+  </div>
+</div>
 
+<!-- Bootstrap JS, Popper.js, and jQuery CDN (required for Bootstrap JavaScript components) -->
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>

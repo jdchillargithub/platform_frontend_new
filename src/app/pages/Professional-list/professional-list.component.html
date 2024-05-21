@@ -1,28 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Doctors List</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="container p-3 mb-3">
-      <div class="rowmt-5">
-        <h1 class="fw-bolder titleOfPage">Doctors</h1>
-      </div>
-        <div class="row p-1">
-            <div class="col-lg-4 col-md-6 col-sm-6 p-3" *ngFor="let professional of professionals">
-                <div class="card p-1 shadow-lg border">
-                    <img class="card-img-top" src="https://static.vecteezy.com/system/resources/thumbnails/028/287/384/small/a-mature-indian-male-doctor-on-a-white-background-ai-generated-photo.jpg" alt="Card image cap">
-                    <div class="card-body">
-                      <h5 class="card-title">{{ professional.doctor_name }}</h5>
-                      <p class=" text-dark fw-bold">{{ professional.department_name }}</p>
-                      <button (click)="routeClick(professional.encryptedPhone)"  class="btn btn-primary">Book Now</button>
-                    </div>
-                  </div>
+      <div class="row mt-0 titleOfPage">
+        <!-- <div class="card ">
+          <div class="row">
+            <div class="col-sm-4">
+              <img
+                [src]="clinicData.entityImage"
+                class="card-img-top"
+                alt="Doctor Image"
+              />
             </div>
-        </div>        
+            <div class="col-sm-8">
+              <div class="card-body" *ngIf="clinicData">
+                <h4 class="card-title">
+                  <b>{{ clinicData.entityName }}</b
+                  ><br />
+                </h4>
+                <h6 style="font-size: medium">Email:{{ clinicData.email }}</h6>
+                <h6 style="font-size: medium">Phone:{{ clinicData.phone }}</h6>
+                <h6 style="font-size: medium">
+                  Address:{{ clinicData.streetName }},
+                  {{ clinicData.cityName }}, {{ clinicData.district }},
+                  {{ clinicData.state }}
+                </h6>
+                <h6 style="font-size: medium">
+                  Pincode:{{ clinicData.pincode }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <div class="card w-100">
+          <div class="row no-gutters">
+            <div class="col-sm-4">
+              <div class="img-container">
+                <img
+                  [src]="clinicData.entityImage"
+                  class="card-img"
+                  alt="Doctor Image"
+                />
+              </div>
+            </div>
+            <div class="col-sm-8 content-col">
+              <div class="card-block px-2 ">
+                <h4 class="card-title cinicInfo">
+                  <b>{{ clinicData.entityName }}</b
+                  ><br />
+                </h4>
+                <h6 class="cinicInfo" style="font-size: medium">Email:{{ clinicData.email }}</h6>
+                <h6 class="cinicInfo" style="font-size: medium">Phone:{{ clinicData.phone }}</h6>
+                <h6 class="cinicInfo" style="font-size: medium">
+                  Address:{{ clinicData.streetName }},
+                  {{ clinicData.cityName }}, {{ clinicData.district }},
+                  {{ clinicData.state }}
+                </h6>
+                <h6 class="cinicInfo" style="font-size: medium">
+                  Pincode:{{ clinicData.pincode }}
+                </h6>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      
-</body>
+      <!-- <div class="col-sm-5">
+          <img
+            [src]="clinicData.entityImage"
+            class="img-fluid"
+            alt="Clinic Logo"
+            height="350"
+            width="350"
+          />
+        </div>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-3 d-flex align-items-start flex-column">
+          <div class="row fs-3">
+            <div class="col-sm-12">
+              <h1 class="fw-bolder">{{ clinicData.entityName }}</h1>
+            </div>
+          </div>
+          <div class="row fs-3">
+            <div class="col-lg-4 col-sm-6 d-flex flex-column align-items-start">
+              <p>Email:</p>
+            </div>
+            <div class="col-lg-8 col-sm-6">
+              <p>{{ clinicData.email }}</p>
+            </div>
+          </div>
+          <div class="row fs-3">
+            <div class="col-lg-6 col-sm-6 d-flex flex-column align-items-start">
+              <p>Phone:</p>
+            </div>
+            <div class="col-lg-6 col-sm-6">
+              <p>{{ clinicData.phone }}</p>
+            </div>
+          </div>
+          <div class="row fs-3">
+            <div class="col-lg-4 col-sm-6 d-flex flex-column align-items-start">
+              <p>Address:</p>
+            </div>
+            <div class="col-lg-8 col-sm-6">
+              <p>
+                {{ clinicData.streetName }}, {{ clinicData.cityName }},
+                {{ clinicData.district }}, {{ clinicData.state }}
+              </p>
+            </div>
+          </div>
+          <div class="row fs-3">
+            <div class="col-lg-7 col-sm-6 d-flex flex-column align-items-start">
+              <p>Pincode:</p>
+            </div>
+            <div class="col-lg-5 col-sm-6">
+              <p>{{ clinicData.pincode }}</p>
+            </div>
+          </div>
+        </div> -->
+      <div class="row p-1">
+        <p
+          *ngIf="!doc"
+          style="color: red; font-weight: 800"
+          class="text-center mt-5 mb-5"
+        >
+          No doctors available!
+        </p>
+        <div
+          class="col-lg-4 col-md-6 col-sm-6 p-3"
+          *ngFor="let professional of professionals"
+        >
+          <div class="card p-1 shadow-lg border">
+            <img
+              class="card-img-top docImg"
+              src="{{ professional.profileImageUrl }}"
+              alt="Doctor Image"
+            />
+            <!-- <img
+              class="card-img-top"
+              src="{{professional.profileImageUrl}}"
+              alt="Doctor Image"
+            /> -->
+            <div class="card-body">
+              <h5 class="card-title">{{ professional.doctor_name }}</h5>
+              <p class="text-dark fw-bold">
+                {{ professional.department_name }}
+              </p>
+              <button
+                (click)="routeClick(professional.encryptedPhone)"
+                class="btn btn-primary"
+              >
+                Book Now
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

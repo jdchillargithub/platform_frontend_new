@@ -33,10 +33,10 @@ ngOnInit(){
   }
 
 
-  routeClick(businessId: string) {
+  routeClick(businessId: string,encryptedId:string) {
     if (businessId) {
       localStorage.setItem("businessId", businessId);
-       this.router.navigate(["/professional"]);
+       this.router.navigate(["/professional"],{ queryParams: {entity: encryptedId }});
     }
   }
 
