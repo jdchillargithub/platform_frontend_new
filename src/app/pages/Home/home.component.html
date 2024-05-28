@@ -14,7 +14,7 @@
   <div class="card">
     <div class="row no-gutters">
       <!-- Left Section with Image -->
-      <div class="col-md-4 text-center p-2">
+      <div class="col-md-4 text-center p-2 cardImgDiv">
         <!-- <img
           *ngIf="doctor_details.doctor_name"
           src="https://www.chillarpayments.com/Demo/Direct-Book/images/Wc2xbVeJl0d6cyfWGCxlvcsxxYogVqsJElJy5tvN.jpeg"
@@ -23,8 +23,8 @@
         /> -->
         <img
           *ngIf="doctor_details.doctor_name"
-         src="{{doctor_details.profileImageUrl}}"
-          class="card-img"
+          src="{{ doctor_details.profileImageUrl }}"
+          class="card-img  img-fluid"
           alt="Doctor Image"
         />
       </div>
@@ -61,10 +61,43 @@
             </button>
           </div>
           <!-- ... (remaining HTML code) ... -->
-          <div>
-            <h5 class="pt-1">
-              Consulting Fees: ₹ {{ doctor_details.consultation_charge }}
-            </h5>
+          <div class="calcText">
+            <div class="row">
+              <div class="col-sm-1"></div>
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-6 labelCol">Consulting Fees:</div>
+                  <div class="col-sm-6">
+                    ₹
+                    {{
+                      doctor_details.amountDetails.consultationChargeWithoutTax
+                    }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 labelCol">GST:</div>
+                  <div class="col-sm-6">
+                    ₹
+                    {{ doctor_details.amountDetails.gstAmount }}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-6 labelCol">Platform Fee:</div>
+                  <div class="col-sm-6">
+                    ₹
+                    {{ doctor_details.amountDetails.appServiceCharge }}
+                  </div>
+                </div>
+                <div class="row totalRow">
+                  <div class="col-sm-6 labelCol">Total Fee:</div>
+                  <div class="col-sm-6">
+                    ₹
+                    {{ doctor_details.amountDetails.totalAmount }}
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-1"></div>
+            </div>
           </div>
           <!-- Add more details as needed -->
         </div>
@@ -121,7 +154,7 @@
     <div class="mt-4 pb-5" *ngIf="!slot">
       <button
         type="submit"
-        class="btn "
+        class="btn"
         [disabled]="!selectedDate || !selectedTimeSlot"
       >
         Proceed to Book
