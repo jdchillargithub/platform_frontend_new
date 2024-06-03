@@ -39,9 +39,14 @@
   object-fit: cover; /* Ensures the image covers the container */
 }
 
+.img-container img {
+  max-height: 18rem;
+  object-fit: contain;
+}
+
 .card-img {
-  max-width: 100%;
-  height: auto;
+  max-height: 18rem;
+  object-fit: contain;
   border-radius: 10px !important;
 }
 

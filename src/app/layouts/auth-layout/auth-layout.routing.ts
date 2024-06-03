@@ -6,6 +6,7 @@ import { AppointmentConfirmedComponent } from "src/app/pages/AppointmentConfirme
 import { ProfessionalListComponent } from "src/app/pages/Professional-list/professional-list.component";
 import { BusinessListComponent } from "src/app/pages/business-list/business-list.component";
 import { ClinicDetailComponent } from "src/app/pages/clinic-detail/clinic-detail.component";
+import { DoctorsListNewComponent } from "src/app/pages/doctors-list-new/doctors-list-new.component";
 
 export const AuthLayoutRoutes: Routes = [
   { path: "home", component: BusinessListComponent },
@@ -15,6 +16,7 @@ export const AuthLayoutRoutes: Routes = [
   { path: "AppointmentConfirmed", component: AppointmentConfirmedComponent },
   { path: "business", component: BusinessListComponent },
   { path: "clinic", component: ClinicDetailComponent },
+  { path: "doctors-list", component: DoctorsListNewComponent },
   // {path: 'EmailOtp', component: EmailOtpComponent},
   // {path: 'AdhaarVerification',component:AdhaarVerificationComponent},
   // {path : 'Offer', component:OfferComponent},

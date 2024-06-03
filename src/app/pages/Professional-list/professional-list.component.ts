@@ -83,6 +83,7 @@ export class ProfessionalListComponent {
   }
 
   routeClick(DocId: string) {
+    const businessId = localStorage.getItem("businessId");
     console.log("FN call==>", DocId);
     if (this.isClinicOpen === false) {
       Swal.fire({
@@ -92,7 +93,7 @@ export class ProfessionalListComponent {
     } else {
       if (DocId) {
         localStorage.setItem("DoctorId", DocId);
-        this.router.navigate(["/doctor"], { queryParams: { id: DocId } });
+        this.router.navigate(["/doctor"], { queryParams: { id: DocId,entity:businessId } });
       }
     }
   }

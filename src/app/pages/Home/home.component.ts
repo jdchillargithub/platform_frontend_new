@@ -44,8 +44,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     private timeSlotService: TimeSlotService
   ) {}
   ngOnInit() {
-    this.businessId = localStorage.getItem("businessId");
-    this.CurrentDocId = localStorage.getItem("DoctorId");
+    // this.businessId = localStorage.getItem("businessId");
+    // this.CurrentDocId = localStorage.getItem("DoctorId");
+    this.businessId = this.getQueryParam("entity");
+    this.CurrentDocId = this.getQueryParam("id");
     this.getProfile();
     this.selectedDateString = this.formatDate(this.selectedDate);
 
@@ -60,6 +62,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   toggleDescription() {
     this.isTruncated = !this.isTruncated;
   }
+
+  getQueryParam(param) {
+    let key;
+    this.route.queryParams.subscribe(params => {
+        key=params[param];
+    });
+    return key;
+  }
+
+
   getProfile() {
     // const data = {
     //   phone: "8585858585"
@@ -67,7 +79,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.service
       .post(
         {
-          phone: "8585858585",
+          // phone: "8585858585",
           encryptedPhone: this.CurrentDocId,
           entityId: this.businessId,
         },
@@ -124,7 +136,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         } else if (response.statusCode === 422) {
           this.slot = true;
           this.snackbarService.showCustomSnackBarError(response.message);
-        }else{
+        } else {
           this.slot = true;
         }
       },

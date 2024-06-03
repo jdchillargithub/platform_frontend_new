@@ -12,6 +12,7 @@ import { MyModalComponent } from "src/app/pages/my-modal/my-modal.component";
 import { ProfessionalListComponent } from "src/app/pages/Professional-list/professional-list.component";
 import { BusinessListComponent } from "src/app/pages/business-list/business-list.component";
 import { ClinicDetailComponent } from "src/app/pages/clinic-detail/clinic-detail.component";
+import { DoctorsListNewComponent } from "src/app/pages/doctors-list-new/doctors-list-new.component";
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { ClinicDetailComponent } from "src/app/pages/clinic-detail/clinic-detail
     ProfessionalListComponent,
     BusinessListComponent,
     ClinicDetailComponent,
+    DoctorsListNewComponent,
   ],
 })
 export class AuthLayoutModule {}
