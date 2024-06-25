@@ -24,7 +24,7 @@
         <img
           *ngIf="doctor_details.doctor_name"
           src="{{ doctor_details.profileImageUrl }}"
-          class="card-img  img-fluid"
+          class="card-img img-fluid"
           alt="Doctor Image"
         />
       </div>
@@ -61,7 +61,7 @@
             </button>
           </div>
           <!-- ... (remaining HTML code) ... -->
-          <div class="calcText">
+          <!-- <div class="calcText">
             <div class="row">
               <div class="col-sm-1"></div>
               <div class="col-sm-10">
@@ -98,7 +98,7 @@
               </div>
               <div class="col-sm-1"></div>
             </div>
-          </div>
+          </div> -->
           <!-- Add more details as needed -->
         </div>
       </div>
@@ -126,7 +126,7 @@
     </div>
     <!-- Time Picker -->
     <div class="mt-4">
-      <span class="time-picker">Select Time </span>
+      <span class="time-picker">Select Slot </span>
       <p
         *ngIf="slot"
         style="color: red; font-weight: 800"
@@ -146,6 +146,7 @@
             disabled: slot.booking_status === 1
           }"
         >
+          <h3>{{ bookingType ? slot.token_number : null }}</h3>
           {{ slot.time_slot }}
         </div>
       </div>

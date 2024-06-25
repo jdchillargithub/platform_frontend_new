@@ -13,6 +13,10 @@ import { ProfessionalListComponent } from "src/app/pages/Professional-list/profe
 import { BusinessListComponent } from "src/app/pages/business-list/business-list.component";
 import { ClinicDetailComponent } from "src/app/pages/clinic-detail/clinic-detail.component";
 import { DoctorsListNewComponent } from "src/app/pages/doctors-list-new/doctors-list-new.component";
+import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatIconModule } from "@angular/material/icon";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+
 
 @NgModule({
   imports: [
@@ -20,6 +24,9 @@ import { DoctorsListNewComponent } from "src/app/pages/doctors-list-new/doctors-
     RouterModule.forChild(AuthLayoutRoutes),
     FormsModule,
     ReactiveFormsModule,
+    MatTooltipModule,
+    MatIconModule,
+    FontAwesomeModule
     // NgbModule
   ],
   declarations: [

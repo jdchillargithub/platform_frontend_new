@@ -25,6 +25,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   doctor_details: any;
   CurrentDocId: any;
   businessId: any;
+  bookingType: any;
   timeSlots: string[] = [];
   selectedDate: Date = new Date();
   selectedDateString: string; // Initializes selectedDate with the current date and time
@@ -48,6 +49,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     // this.CurrentDocId = localStorage.getItem("DoctorId");
     this.businessId = this.getQueryParam("entity");
     this.CurrentDocId = this.getQueryParam("id");
+    localStorage.setItem("businessId", this.businessId);
+    localStorage.setItem("DoctorId", this.CurrentDocId);
     this.getProfile();
     this.selectedDateString = this.formatDate(this.selectedDate);
 
@@ -65,12 +68,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getQueryParam(param) {
     let key;
-    this.route.queryParams.subscribe(params => {
-        key=params[param];
+    this.route.queryParams.subscribe((params) => {
+      key = params[param];
     });
     return key;
   }
-
 
   getProfile() {
     // const data = {
@@ -126,9 +128,11 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.slot = false;
             console.log("=-=-=-slot=-=-=", this.slot);
           }
+          this.bookingType=response.data.type
           this.timeSlots = response.data.workSlots.map((slot: any) => ({
             time_slot: slot.time_slot,
             booking_status: slot.booking_status,
+            token_number: slot.token_number,
           }));
         } else if (response.statusCode === 403) {
           this.slot = true;

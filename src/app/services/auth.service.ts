@@ -18,6 +18,7 @@ export class AuthService {
   // baseURL = "";
 
   /* UAT LINK */
+  // baseURL = "http://139.59.76.214:8081"
   baseURL = "http://139.59.76.214:8081"
 
 

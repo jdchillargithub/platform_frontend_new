@@ -1,5 +1,6 @@
 // Angular component code
 
+import { Location } from "@angular/common";
 import { HttpClient } from "@angular/common/http";
 import { ChangeDetectorRef, Component, NgZone } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -10,6 +11,10 @@ import { DoctorsDataService } from "src/app/services/doctors.service";
 import { SnackbarService } from "src/app/services/snackbar.service";
 import { TimeSlotService } from "src/app/services/time.service";
 import { environment } from "src/environments/environment";
+import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
+
+
+
 
 declare var Razorpay: any;
 declare var Swal: any;
@@ -28,6 +33,8 @@ export class PatientAppointmentComponent {
   amount: number = 10;
   customerForm!: FormGroup;
   businessId: any;
+  amountData: any;
+  faCircleInfo=faCircleInfo;
 
   constructor(
     private http: HttpClient,
@@ -39,7 +46,8 @@ export class PatientAppointmentComponent {
     private cdr: ChangeDetectorRef,
     private ngZone: NgZone,
     private bookingData: BookingDataService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -56,7 +64,30 @@ export class PatientAppointmentComponent {
       ],
     });
     console.log("=-=-=-=form=-=-", this.customerForm.valid);
+    this.getAmountDetails();
   }
+
+  getAmountDetails() {
+    const payload = {
+      entityId: 1,
+      doctorId: 1,
+    };
+    this.service.post(payload, "/api/v1/customer/amount-details").subscribe(
+      (response) => {
+        if (response.statusCode == "200") {
+          this.amountData=response.data.data;
+        } 
+        // else {
+        //   this.snackbarService.showCustomSnackBarError(response.message);
+        // }
+      },
+      (error) => {
+        console.error("API call failed:", error);
+        this.snackbarService.showCustomSnackBarError(error);
+      }
+    );
+  }
+
   restrictToNumbers(event: any) {
     const input = event.target;
     const regex = /^[0-9]*$/; // Regular expression to match only numbers
@@ -133,8 +164,9 @@ export class PatientAppointmentComponent {
   }
 
   goBack() {
-    const docId=localStorage.getItem("DoctorId");
-    this.router.navigate(["/doctor"], { queryParams: { id: docId } });
+    const docId = localStorage.getItem("DoctorId");
+    // this.router.navigate(["/doctor"], { queryParams: { id: docId } });
+    this.location.back();
   }
 
   initiateRazorpay(orderId: string, amount: number) {
@@ -191,6 +223,7 @@ export class PatientAppointmentComponent {
 
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.type="text/javascript"
     script.async = false;
     document.head.appendChild(script);
 

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  razorpayKey: 'rzp_test_IpwktzfouNqxy7',
+  razorpayKey: 'rzp_test_eEq43QGYfjTlfD',
 };
 
 /*
