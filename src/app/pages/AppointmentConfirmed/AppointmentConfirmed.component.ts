@@ -87,7 +87,7 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
     Swal.fire({
       title: "Share",
       html: ` <a href='https://wa.me/+91${
-        this.booking_details.customerPhone
+        this.booking_details.bookedPhoneNo
       }?text=${encodeURIComponent(
         this.whatsapp_message_1 + this.whatsapp_message_2
       )}'><i class="fa-brands fa-whatsapp" style='font-size:80px;color:green;padding:8px;'></i></a> `,
@@ -98,20 +98,55 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
     });
   }
 
-  captureEntirePage() {
-    // Capture the screenshot of the entire HTML body
-    const cardElement = document.getElementById("cardToCapture");
+  // captureEntirePage() {
+  //   // Capture the screenshot of the entire HTML body
+  //   const cardElement = document.getElementById("cardToCapture");
 
-    html2canvas(cardElement).then((canvas) => {
-      // Convert the canvas to a data URL
+  //   html2canvas(cardElement).then((canvas) => {
+  //     // Convert the canvas to a data URL
+  //     const imgData = canvas.toDataURL("image/png");
+  //     // Create a link element to trigger the download of the image
+  //     const a = document.createElement("a");
+  //     a.href = imgData;
+  //     a.download = "appointment_booking.png";
+  //     a.click();
+  //   });
+  // }
+
+  captureEntirePage() {
+    const cardElement = document.getElementById("cardToCapture");
+  
+    // Check if html2canvas is supported
+    if (!html2canvas) {
+      console.error('html2canvas is not available.');
+      return;
+    }
+  
+    // Check if iOS device
+    // const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  
+    // Use options to handle CORS issues on iOS
+    const options = {
+      useCORS: true,
+      allowTaint: true,
+    };
+  
+    // Capture screenshot
+    html2canvas(cardElement, options).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
+  
       // Create a link element to trigger the download of the image
       const a = document.createElement("a");
       a.href = imgData;
       a.download = "appointment_booking.png";
       a.click();
+    }).catch((error) => {
+      console.error('Error capturing screenshot:', error);
+      // Handle errors or provide feedback to the user
     });
   }
+  
+
   close() {
     // this.router.navigate(['/home']); // Assuming '/' is the route for the home page
     this.router.navigate(["/doctor"], {

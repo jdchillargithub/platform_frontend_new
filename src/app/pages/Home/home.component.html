@@ -8,6 +8,11 @@
   href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
   rel="stylesheet"
 />
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+/>
+
 <div class="container mt-5">
   <h3 class="text-center pb-3">BOOK AN APPOINTMENT</h3>
   <!-- Top Card Split -->
@@ -110,8 +115,7 @@
       <label for="fecha1">
         <span class="date-title">Select Date</span>
       </label>
-      <div class="datepicker date input-group">
-        <!-- <input type="date" class="form-control" id="fecha1" [(ngModel)]="selectedDate" required/> -->
+      <!-- <div class="datepicker date input-group">
         <input
           type="date"
           class="form-control"
@@ -122,8 +126,31 @@
           [min]="minDate"
           [max]="maxDate"
         />
+      </div> -->
+      <div class="datepicker date input-group">
+        <mat-form-field appearance="fill" style="width: 100%;">
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            placeholder="Choose a date"
+            id="fecha1"
+            [min]="minDate" [max]="maxDate"
+            [value]="minDate"
+            (dateInput)="onDateChange($event)"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker
+            #picker
+            (dateChange)="onDateChange($event)"
+          ></mat-datepicker>
+        </mat-form-field>
       </div>
     </div>
+
     <!-- Time Picker -->
     <div class="mt-4">
       <span class="time-picker">Select Slot </span>

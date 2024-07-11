@@ -122,6 +122,14 @@
   /* Set the cursor style for inactive dates */
 }
 
+.mat-calendar-body-today {
+  outline: none; /* Remove outline */
+}
+
+.datepicker {
+  width: 100% !important;
+}
+
 .disabled {
   // Add your styles for disabled time slots
   opacity: 0.5; // This is just an example, you can customize it as needed

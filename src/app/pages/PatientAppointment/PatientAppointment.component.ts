@@ -12,9 +12,8 @@ import { SnackbarService } from "src/app/services/snackbar.service";
 import { TimeSlotService } from "src/app/services/time.service";
 import { environment } from "src/environments/environment";
 import { faCircleInfo } from "@fortawesome/free-solid-svg-icons";
-
-
-
+// import { CashfreeService } from "src/app/services/cashfree.service";
+import { load } from "@cashfreepayments/cashfree-js";
 
 declare var Razorpay: any;
 declare var Swal: any;
@@ -34,7 +33,7 @@ export class PatientAppointmentComponent {
   customerForm!: FormGroup;
   businessId: any;
   amountData: any;
-  faCircleInfo=faCircleInfo;
+  faCircleInfo = faCircleInfo;
 
   constructor(
     private http: HttpClient,
@@ -47,7 +46,7 @@ export class PatientAppointmentComponent {
     private ngZone: NgZone,
     private bookingData: BookingDataService,
     private formBuilder: FormBuilder,
-    private location: Location
+    private location: Location // private cashfreeService: CashfreeService
   ) {}
 
   ngOnInit() {
@@ -75,8 +74,8 @@ export class PatientAppointmentComponent {
     this.service.post(payload, "/api/v1/customer/amount-details").subscribe(
       (response) => {
         if (response.statusCode == "200") {
-          this.amountData=response.data.data;
-        } 
+          this.amountData = response.data.data;
+        }
         // else {
         //   this.snackbarService.showCustomSnackBarError(response.message);
         // }
@@ -150,7 +149,8 @@ export class PatientAppointmentComponent {
           if (response.statusCode === "200") {
             // this.snackbarService.showCustomSnackBarSuccess(response.message);
             this.bookingData.bookingData = response.data;
-            this.initiateRazorpay(response.data.orderId, response.data.amount);
+            // this.initiateRazorpay(response.data.orderId, response.data.amount);
+            this.cashfreeCreateorder("", response.data.payment_session_id);
           } else {
             this.snackbarService.showCustomSnackBarError(response.message);
           }
@@ -223,7 +223,7 @@ export class PatientAppointmentComponent {
 
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.type="text/javascript"
+    script.type = "text/javascript";
     script.async = false;
     document.head.appendChild(script);
 
@@ -231,5 +231,24 @@ export class PatientAppointmentComponent {
       const rzp = new Razorpay(options);
       rzp.open();
     };
+  }
+
+  async cashfreeCreateorder(cf_order_id: string, payment_session_id: string) {
+    // let cashfree: any;
+    // let initializeSDK = async function () {
+
+    // };
+    // await initializeSDK();
+    let cashfree = await load({
+      mode: "sandbox",
+    });
+    console.log("session=>", payment_session_id);
+
+    let checkoutOptions = {
+      paymentSessionId:
+        "session_t6LfIr6KL5RwVz67-Urzszzegpc0PpvxobKmP0L614nrUV-oUfQ-2LjlnIS4WbR2ab79yBgUOgzcJfFeis3Z_GITuQDNVqaz-QbwUH7BsWwa",
+      redirectTarget: "_self",
+    };
+    cashfree.checkout(checkoutOptions);
   }
 }

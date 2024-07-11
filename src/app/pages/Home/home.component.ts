@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { AuthService } from "src/app/services/auth.service";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -8,6 +14,7 @@ import { SnackbarService } from "src/app/services/snackbar.service";
 import { DoctorsDataService } from "src/app/services/doctors.service";
 import { TimeSlotService } from "src/app/services/time.service";
 import { formatDate } from "@angular/common";
+import { DateAdapter } from "@angular/material/core";
 
 export interface PeriodicElement {
   time_slot: string;
@@ -21,6 +28,8 @@ const ELEMENT_DATA: PeriodicElement[] = []; // Your initial data goes here
   styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  @ViewChild("fecha1", { static: false }) dateInput: ElementRef;
+
   isLoading: boolean = false;
   doctor_details: any;
   CurrentDocId: any;
@@ -31,8 +40,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedDateString: string; // Initializes selectedDate with the current date and time
   selectedTimeSlot: string; // Property to store the selected time slot
   slot: boolean = false;
-  minDate: string = new Date().toISOString().split("T")[0];
-  maxDate: string = this.calculateMaxDate();
+  minDate: Date;
+  maxDate: Date;
   isTruncated: boolean = true; // Initially set to truncated
 
   constructor(
@@ -42,8 +51,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private doctorsData: DoctorsDataService,
     private snackbarService: SnackbarService,
-    private timeSlotService: TimeSlotService
-  ) {}
+    private timeSlotService: TimeSlotService,
+    private dateAdapter: DateAdapter<Date>
+  ) {
+    this.dateAdapter.setLocale("en-GB"); //dd/MM/yyyy
+  }
   ngOnInit() {
     // this.businessId = localStorage.getItem("businessId");
     // this.CurrentDocId = localStorage.getItem("DoctorId");
@@ -52,13 +64,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     localStorage.setItem("businessId", this.businessId);
     localStorage.setItem("DoctorId", this.CurrentDocId);
     this.getProfile();
-    this.selectedDateString = this.formatDate(this.selectedDate);
+    this.selectedDate = new Date();
+    // Initialize with today's date
+    this.minDate = this.calculateMinDate();
+    this.maxDate = this.calculateMaxDate();
+    this.selectedDateString = this.formatDate(this.minDate);
 
     // Set the initial minDate to today
-    this.minDate = this.formatDate(new Date());
+    // this.minDate = this.formatDate(new Date());
 
     // Calculate and set the initial maxDate
-    this.calculateMaxDate();
+    // this.calculateMaxDate();
     // this.getWorkSlots();
   }
   ngOnDestroy() {}
@@ -73,6 +89,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
     return key;
   }
+  // openDatePicker() {
+  //   this.dateInput.nativeElement.focus();
+  // }
 
   getProfile() {
     // const data = {
@@ -128,7 +147,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             this.slot = false;
             console.log("=-=-=-slot=-=-=", this.slot);
           }
-          this.bookingType=response.data.type
+          this.bookingType = response.data.type;
           this.timeSlots = response.data.workSlots.map((slot: any) => ({
             time_slot: slot.time_slot,
             booking_status: slot.booking_status,
@@ -180,24 +199,42 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectTimeSlot(slot: string) {
     this.selectedTimeSlot = slot;
   }
+  calculateMinDate(): Date {
+    const today = new Date();
+    today.setDate(today.getDate() + 1); // Tomorrow
+    return today;
+  }
 
-  onDateChange() {
+  calculateMaxDate(): Date {
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 7); // 7 days from today
+    return maxDate;
+  }
+  // Date filter function
+  //  filterDate = (date: Date | null): boolean => {
+  //   const day = (date || new Date()).getDay();
+  //   return day !== 0 && day !== 6 && // Disable weekends
+  //     (date >= this.minDate && date <= this.maxDate); // Disable dates outside of min and max range
+  // }
+
+  onDateChange(event: any) {
     // Set the minimum date to today
-    this.minDate = this.formatDate(new Date());
-    this.calculateMaxDate();
+    // this.minDate = this.formatDate(new Date());
+    // this.calculateMaxDate();
+    this.selectedDateString = this.formatDate(event.value);
     if (this.selectedDateString) {
       this.getWorkSlots();
     }
   }
 
-  calculateMaxDate(): string {
-    const currentDate = new Date();
-    const maxDate = new Date(currentDate);
-    maxDate.setDate(currentDate.getDate() + 7);
+  // calculateMaxDate(): string {
+  //   const currentDate = new Date();
+  //   const maxDate = new Date(currentDate);
+  //   maxDate.setDate(currentDate.getDate() + 7);
 
-    // Return the formatted maxDate
-    return this.formatDate(maxDate);
-  }
+  //   // Return the formatted maxDate
+  //   return this.formatDate(maxDate);
+  // }
 
   formatDate(date: Date): string {
     return formatDate(date, "yyyy-MM-dd", "en-US");
