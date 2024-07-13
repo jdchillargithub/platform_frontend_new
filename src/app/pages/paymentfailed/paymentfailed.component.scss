@@ -1,0 +1,54 @@
+// body {
+//     background-color: #F7F7F6;
+// }
+
+.card {
+    width: 50%;
+    margin: auto;
+    margin-top: 50px;
+    border-radius: 25px;
+    background: #EBEBEA;
+    border: none;
+    text-align: center;
+    padding: 40px;
+}
+
+.success-animation {
+    color: #d50606;
+    font-size: 50px;
+    animation: bounce 1s infinite;
+}
+
+.success-message {
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: black;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.btn {
+    border-radius: 12px;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-20px);
+    }
+    60% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive Styles for Small Screens */
+@media (max-width: 576px) {
+    .card {
+        width: 80%;
+    }
+}

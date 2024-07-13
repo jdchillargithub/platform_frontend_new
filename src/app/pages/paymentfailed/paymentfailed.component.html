@@ -1,0 +1,27 @@
+<!-- Ensure you have Font Awesome 6.4.0 CSS loaded for the icons -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+<!-- Container for the card -->
+<div class="container">
+  <!-- Card to capture -->
+  <div class="card" id="cardToCapture">
+    <!-- Close button with red cross icon -->
+    <p>
+      <a (click)="close()" style="cursor: pointer">
+        <i
+          class="fas fa-times-circle"
+          style="float: right; font-size: 24px; color: red"
+        ></i>
+      </a>
+    </p>
+
+     <!-- Success Animation (Cross) -->
+     <div class="success-animation">&#10006;</div>
+
+    <!-- Success Message -->
+    <div class="success-message">Payment failed</div>
+  </div>
+</div>

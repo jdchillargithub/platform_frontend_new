@@ -20,7 +20,9 @@ export class AuthService {
   /* UAT LINK */
   // baseURL = "http://139.59.76.214:8081"
   // baseURL = "http://139.59.76.214:8081"
+
   baseURL = "https://booking.chillarpayments.com/backend"
+  // baseURL = "http://localhost:3002"
 
 
   // 1. Generic API Methods

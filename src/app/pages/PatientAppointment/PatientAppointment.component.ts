@@ -146,11 +146,21 @@ export class PatientAppointmentComponent {
 
       this.service.post(formValue, "/api/v1/booking/bookAppointment").subscribe(
         (response) => {
-          if (response.statusCode === "200") {
+          if (response.statusCode == "200") {
             // this.snackbarService.showCustomSnackBarSuccess(response.message);
             this.bookingData.bookingData = response.data;
-            // this.initiateRazorpay(response.data.orderId, response.data.amount);
-            this.cashfreeCreateorder("", response.data.payment_session_id);
+            // console.log("Bookappoinment==>", response.data);
+            if (response.data.currentPg == 1) {
+              this.initiateRazorpay(
+                response.data.orderId,
+                response.data.amount
+              );
+            } else if (response.data.currentPg == 2) {
+              this.cashfreeCreateorder(
+                response.data.orderId,
+                response.data.payment_session_id
+              );
+            }
           } else {
             this.snackbarService.showCustomSnackBarError(response.message);
           }
@@ -192,13 +202,14 @@ export class PatientAppointmentComponent {
               .post(paymentvalue, "/api/v1/payment/payment-update")
               .subscribe(
                 (response) => {
-                  if (response.statusCode === 200) {
+                  if (response.statusCode == 200) {
                     // this.snackbarService.showCustomSnackBarSuccess(response.message);
                     this.router.navigate(["/AppointmentConfirmed"]);
                   } else {
-                    this.snackbarService.showCustomSnackBarError(
-                      response.message
-                    );
+                    this.router.navigate(["/payment-failed"]);
+                    // this.snackbarService.showCustomSnackBarError(
+                    //   response.message
+                    // );
                   }
                 },
                 (error) => {
@@ -233,22 +244,18 @@ export class PatientAppointmentComponent {
     };
   }
 
-  async cashfreeCreateorder(cf_order_id: string, payment_session_id: string) {
-    // let cashfree: any;
-    // let initializeSDK = async function () {
-
-    // };
-    // await initializeSDK();
+  async cashfreeCreateorder(orderId: string, payment_session_id: string) {
     let cashfree = await load({
       mode: "sandbox",
     });
-    console.log("session=>", payment_session_id);
 
     let checkoutOptions = {
-      paymentSessionId:
-        "session_t6LfIr6KL5RwVz67-Urzszzegpc0PpvxobKmP0L614nrUV-oUfQ-2LjlnIS4WbR2ab79yBgUOgzcJfFeis3Z_GITuQDNVqaz-QbwUH7BsWwa",
+      paymentSessionId: payment_session_id,
       redirectTarget: "_self",
     };
     cashfree.checkout(checkoutOptions);
+ 
   }
+
+  
 }
