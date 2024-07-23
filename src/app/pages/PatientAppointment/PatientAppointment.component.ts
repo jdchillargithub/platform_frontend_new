@@ -32,6 +32,7 @@ export class PatientAppointmentComponent {
   amount: number = 10;
   customerForm!: FormGroup;
   businessId: any;
+  docId: any;
   amountData: any;
   faCircleInfo = faCircleInfo;
 
@@ -51,6 +52,7 @@ export class PatientAppointmentComponent {
 
   ngOnInit() {
     this.businessId = localStorage.getItem("businessId");
+    this.docId = localStorage.getItem("DoctorId");
     this.customerForm = this.formBuilder.group({
       username: ["", [Validators.required, Validators.pattern("^[a-zA-Z ]*$")]],
       mobile: [
@@ -68,8 +70,8 @@ export class PatientAppointmentComponent {
 
   getAmountDetails() {
     const payload = {
-      entityId: 1,
-      doctorId: 1,
+      entityId: this.businessId,
+      encryptedPhone: this.docId,
     };
     this.service.post(payload, "/api/v1/customer/amount-details").subscribe(
       (response) => {
@@ -150,6 +152,8 @@ export class PatientAppointmentComponent {
             // this.snackbarService.showCustomSnackBarSuccess(response.message);
             this.bookingData.bookingData = response.data;
             // console.log("Bookappoinment==>", response.data);
+
+            //commented to disable the PG
             if (response.data.currentPg == 1) {
               this.initiateRazorpay(
                 response.data.orderId,
@@ -161,6 +165,25 @@ export class PatientAppointmentComponent {
                 response.data.payment_session_id
               );
             }
+            
+            const paymentvalue = {
+              paymentId: response.data.payment_session_id,
+              orderId: response.data.orderId,
+            };
+            this.service
+              .post(paymentvalue, "/api/v1/payment/payment-update")
+              .subscribe(
+                (response) => {
+                  if (response.statusCode == 200) {
+                    // console.log("Booking confirmed");
+                    this.router.navigate(["/AppointmentConfirmed"]);
+                  }
+                },
+                (error) => {
+                  console.error("API call failed:", error);
+                  this.snackbarService.showCustomSnackBarError(error);
+                }
+              );
           } else {
             this.snackbarService.showCustomSnackBarError(response.message);
           }
@@ -254,8 +277,5 @@ export class PatientAppointmentComponent {
       redirectTarget: "_self",
     };
     cashfree.checkout(checkoutOptions);
- 
   }
-
-  
 }

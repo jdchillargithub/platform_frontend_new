@@ -115,37 +115,38 @@ export class AppointmentConfirmedComponent implements OnInit, OnDestroy {
 
   captureEntirePage() {
     const cardElement = document.getElementById("cardToCapture");
-  
+
     // Check if html2canvas is supported
     if (!html2canvas) {
-      console.error('html2canvas is not available.');
+      console.error("html2canvas is not available.");
       return;
     }
-  
+
     // Check if iOS device
     // const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-  
+
     // Use options to handle CORS issues on iOS
     const options = {
       useCORS: true,
       allowTaint: true,
     };
-  
+
     // Capture screenshot
-    html2canvas(cardElement, options).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-  
-      // Create a link element to trigger the download of the image
-      const a = document.createElement("a");
-      a.href = imgData;
-      a.download = "appointment_booking.png";
-      a.click();
-    }).catch((error) => {
-      console.error('Error capturing screenshot:', error);
-      // Handle errors or provide feedback to the user
-    });
+    html2canvas(cardElement, options)
+      .then((canvas) => {
+        const imgData = canvas.toDataURL("image/png");
+
+        // Create a link element to trigger the download of the image
+        const a = document.createElement("a");
+        a.href = imgData;
+        a.download = "appointment_booking.png";
+        a.click();
+      })
+      .catch((error) => {
+        console.error("Error capturing screenshot:", error);
+        // Handle errors or provide feedback to the user
+      });
   }
-  
 
   close() {
     // this.router.navigate(['/home']); // Assuming '/' is the route for the home page

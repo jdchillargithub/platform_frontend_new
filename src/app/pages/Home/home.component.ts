@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   timeSlots: string[] = [];
   selectedDate: Date = new Date();
   selectedDateString: string; // Initializes selectedDate with the current date and time
-  selectedTimeSlot: string; // Property to store the selected time slot
+  selectedTimeSlot: any; // Property to store the selected time slot
   slot: boolean = false;
   minDate: Date;
   maxDate: Date;
@@ -191,8 +191,32 @@ export class HomeComponent implements OnInit, OnDestroy {
       "Updated timeSlotService:",
       this.timeSlotService.timeSlotService
     );
+    // const timeSlotSelected = this.selectedTimeSlot
+    this.service
+      .post(
+        {
+          encryptedPhone: this.CurrentDocId,
+          entityId: this.businessId,
+          timeSlot: this.selectedTimeSlot.time_slot,
+          appointmentDate: this.selectedDateString,
+        },
+        "/api/v1/booking/slot-on-hold"
+      )
+      .subscribe(
+        (response) => {
+          if (response.statusCode === 200) {
+            this.router.navigate(["/patientAppointment"]);
+          } else {
+            this.snackbarService.showCustomSnackBarError(response.message);
+          }
+        },
+        (error) => {
+          // Handle the error response
+          console.error("API call failed:", error);
+          this.snackbarService.showCustomSnackBarError(error);
+        }
+      );
 
-    this.router.navigate(["/patientAppointment"]);
     // Perform further actions here, such as navigating to a different page or making API calls
   }
   // Method to handle selection of a time slot

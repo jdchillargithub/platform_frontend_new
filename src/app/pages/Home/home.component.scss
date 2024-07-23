@@ -61,13 +61,14 @@
 .time-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  // justify-content: space-between;
   margin-top: 10px;
 }
 
 .time-option {
   width: calc(33.33% - 10px);
   margin-bottom: 10px;
+  margin-right: 10px;
   border-radius: 12px;
   border: 0.5px solid #bbb;
   padding: 10px;
@@ -111,9 +112,30 @@
   /* Set the text color for booked slots */
   cursor: not-allowed;
   /* Set the cursor style for booked slots */
+  pointer-events: none;
 }
 
-.datepicker .day.disabled {
+.time-option.onHold {
+  background-color: #ccc;
+  /* Set the background color for booked slots */
+  color: #666;
+  /* Set the text color for booked slots */
+  cursor: not-allowed;
+  /* Set the cursor style for booked slots */
+  pointer-events: none;
+}
+
+.time-option.completed {
+  background-color: #ccc;
+  /* Set the background color for booked slots */
+  color: #aaa;
+  /* Set the text color for booked slots */
+  cursor: not-allowed;
+  /* Set the cursor style for booked slots */
+  pointer-events: none;
+}
+
+.datepicker.day.disabled {
   background-color: #eee;
   /* Set the background color for inactive dates */
   color: #aaa;
