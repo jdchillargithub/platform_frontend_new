@@ -48,7 +48,7 @@ export class PatientAppointmentComponent {
     private bookingData: BookingDataService,
     private formBuilder: FormBuilder,
     private location: Location // private cashfreeService: CashfreeService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.businessId = localStorage.getItem("businessId");
@@ -131,7 +131,7 @@ export class PatientAppointmentComponent {
     }
   }
 
-  validateForm() {
+  async validateForm() {
     console.log("Form value:", this.customerForm.value);
     console.log("Form status:", this.customerForm.status);
     if (this.customerForm.valid) {
@@ -142,18 +142,31 @@ export class PatientAppointmentComponent {
           this.timeSlotService.timeSlotService.selectedTimeSlot.time_slot,
         customerName: this.customerForm.get("username")?.value,
         customerPhone: this.customerForm.get("mobile")?.value.slice(0, 10),
-        amount: this.amount,
+        // amount: this.amount,
         entityId: this.businessId,
       };
+      try {
+        const response = await this.service.post(formValue, "/api/v1/booking/bookAppointment").toPromise();
 
-      this.service.post(formValue, "/api/v1/booking/bookAppointment").subscribe(
-        (response) => {
-          if (response.statusCode == "200") {
-            // this.snackbarService.showCustomSnackBarSuccess(response.message);
-            this.bookingData.bookingData = response.data;
-            // console.log("Bookappoinment==>", response.data);
+        if (response.statusCode == 200) {
+          // this.snackbarService.showCustomSnackBarSuccess(response.message);
+          this.bookingData.bookingData = response.data;
 
-            //commented to disable the PG
+
+          if (response.data.amount == 0) {
+            const paymentvalue = {
+              paymentId: response.data.payment_session_id,
+              orderId: response.data.orderId,
+            };
+            const resBook = await this.service
+              .post(paymentvalue, "/api/v1/payment/payment-update").toPromise();
+
+            if (resBook.statusCode == 200) {
+              // console.log("Booking confirmed");
+              this.router.navigate(["/AppointmentConfirmed"]);
+            }
+          } else {
+            //comment to disable the PG
             if (response.data.currentPg == 1) {
               this.initiateRazorpay(
                 response.data.orderId,
@@ -165,34 +178,18 @@ export class PatientAppointmentComponent {
                 response.data.payment_session_id
               );
             }
-            
-            const paymentvalue = {
-              paymentId: response.data.payment_session_id,
-              orderId: response.data.orderId,
-            };
-            this.service
-              .post(paymentvalue, "/api/v1/payment/payment-update")
-              .subscribe(
-                (response) => {
-                  if (response.statusCode == 200) {
-                    // console.log("Booking confirmed");
-                    this.router.navigate(["/AppointmentConfirmed"]);
-                  }
-                },
-                (error) => {
-                  console.error("API call failed:", error);
-                  this.snackbarService.showCustomSnackBarError(error);
-                }
-              );
-          } else {
-            this.snackbarService.showCustomSnackBarError(response.message);
           }
-        },
-        (error) => {
-          console.error("API call failed:", error);
-          this.snackbarService.showCustomSnackBarError(error);
+
+        } else {
+          this.snackbarService.showCustomSnackBarError(response.message);
         }
-      );
+
+      } catch (error) {
+        console.error("API call failed:", error);
+        this.snackbarService.showCustomSnackBarError(error);
+      }
+
+
     }
   }
 
