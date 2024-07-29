@@ -76,7 +76,7 @@ export class PatientAppointmentComponent {
     this.service.post(payload, "/api/v1/customer/amount-details").subscribe(
       (response) => {
         if (response.statusCode == "200") {
-          this.amountData = response.data.data;
+          this.amountData = response.data;
         }
         // else {
         //   this.snackbarService.showCustomSnackBarError(response.message);

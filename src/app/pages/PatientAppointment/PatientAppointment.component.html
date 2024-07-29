@@ -1,10 +1,6 @@
 <!-- Bootstrap CSS CDN -->
-<link
-  rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-  crossorigin="anonymous"
-/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
 <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
 <!-- Your custom styles (if any) -->
 
@@ -19,7 +15,7 @@
           <h6>
             Date:
             {{
-              timeSlotService.timeSlotService.selectedDate | date : "mediumDate"
+            timeSlotService.timeSlotService.selectedDate | date : "mediumDate"
             }}
           </h6>
           <h6>
@@ -28,7 +24,7 @@
           </h6>
         </div>
         <div class="col-md-6 text-center">
-          <!-- <h6>Booking Fee: ₹{{ amount }}</h6> -->
+          <h6 *ngIf='amountData.bookingFee!=0'>Booking Fee: ₹{{ amountData.bookingFee }}</h6>
           <h6>
             Consultation Fee: ₹{{ doctorsData.doctorsData.consultation_charge }}
           </h6>
@@ -47,74 +43,38 @@
       <form [formGroup]="customerForm" (ngSubmit)="validateForm()">
         <div class="form-group">
           <label for="username">Patient Name</label>
-          <input
-            type="text"
-            class="form-control"
-            id="username"
-            formControlName="username"
-            placeholder="Enter your name"
-            (input)="restrictToAlphabets($event)"
-          />
-          <small
-            *ngIf="
+          <input type="text" class="form-control" id="username" formControlName="username" placeholder="Enter your name"
+            (input)="restrictToAlphabets($event)" />
+          <small *ngIf="
               customerForm.get('username').hasError('required') &&
               customerForm.get('username').touched
-            "
-            style="color: red"
-            >Patient name is required</small
-          >
-          <small
-            *ngIf="
+            " style="color: red">Patient name is required</small>
+          <small *ngIf="
               customerForm.get('username').hasError('pattern') &&
               customerForm.get('username').touched
-            "
-            style="color: red"
-            >Patient name must contain only alphabets</small
-          >
+            " style="color: red">Patient name must contain only alphabets</small>
         </div>
 
         <div class="form-group">
           <label for="mobile">Contact Number</label>
-          <input
-            type="text"
-            class="form-control"
-            (input)="restrictToNumbers($event)"
-            id="mobile"
-            formControlName="mobile"
-            placeholder="Enter your mobile number"
-          />
-          <small
-            *ngIf="
+          <input type="text" class="form-control" (input)="restrictToNumbers($event)" id="mobile"
+            formControlName="mobile" placeholder="Enter your mobile number" />
+          <small *ngIf="
               customerForm.get('mobile').hasError('required') &&
               customerForm.get('mobile').touched
-            "
-            style="color: red; margin-left: 8px"
-            >Phone number is required.</small
-          >
-          <small
-            *ngIf="
+            " style="color: red; margin-left: 8px">Phone number is required.</small>
+          <small *ngIf="
               customerForm.get('mobile').hasError('pattern') &&
               customerForm.get('mobile').touched
-            "
-            style="color: red; margin-left: 8px"
-            >Phone number must contain only numbers.</small
-          >
-          <small
-            *ngIf="
+            " style="color: red; margin-left: 8px">Phone number must contain only numbers.</small>
+          <small *ngIf="
               customerForm.get('mobile').hasError('minlength') &&
               customerForm.get('mobile').touched
-            "
-            style="color: red; margin-left: 8px"
-            >Phone number must be at least 10 digits.</small
-          >
+            " style="color: red; margin-left: 8px">Phone number must be at least 10 digits.</small>
           <!-- <small *ngIf="customerForm.get('mobile').hasError('maxlength') && customerForm.get('mobile').touched" style="color: red;margin-left: 8px;">Phone number must not exceed 10 digits.</small> -->
         </div>
 
-        <button
-          type="submit"
-          [disabled]="!customerForm.valid"
-          class="btn btn-primary"
-        >
+        <button type="submit" [disabled]="!customerForm.valid" class="btn btn-primary">
           Confirm Booking
         </button>
       </form>
@@ -124,22 +84,10 @@
   <!-- <button type="button" class="btn btn-primary mt-5" (click)="validateForm()">Confirm Booking</button> -->
 </div>
 <!-- Bootstrap JS, Popper.js, and jQuery CDN (required for Bootstrap JavaScript components) -->
-<script
-  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-  crossorigin="anonymous"
-></script>
-<script
-  type="text/javascript"
-  src="https://checkout.razorpay.com/v1/checkout.js"
-></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://checkout.razorpay.com/v1/checkout.js"></script>
