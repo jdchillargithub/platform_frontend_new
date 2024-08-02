@@ -1,17 +1,8 @@
 <!-- Bootstrap CSS CDN -->
-<link
-  rel="stylesheet"
-  href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
 <!-- Your custom styles (if any) -->
-<link
-  href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-  rel="stylesheet"
-/>
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
 <div class="container mt-5">
   <h3 class="text-center pb-3">BOOK AN APPOINTMENT</h3>
@@ -26,42 +17,26 @@
           class="card-img img=responsivep-5"
           alt="Doctor Image"
         /> -->
-        <img
-          *ngIf="doctor_details.doctor_name"
-          src="{{ doctor_details.profileImageUrl }}"
-          class="card-img img-fluid"
-          alt="Doctor Image"
-        />
+        <img *ngIf="doctor_details.doctor_name" src="{{ doctor_details.profileImageUrl }}" class="card-img img-fluid"
+          alt="Doctor Image" />
       </div>
       <!-- Right Section with Name, Designation, and Consulting Fees -->
       <div class="col-md-8 text-center" *ngIf="doctor_details">
         <div class="card-body">
           <h4 class="card-title">
-            <b>{{ doctor_details.doctor_name }}</b
-            ><br />
+            <b>{{ doctor_details.doctor_name }}</b><br />
           </h4>
           <h6>{{ doctor_details.qualification }}</h6>
           <h6>{{ doctor_details.designation }}</h6>
           <!-- ... (previous HTML code) ... -->
           <div class="card-tex">
-            <div
-              [class.truncated]="isTruncated"
-              [class.expanded]="!isTruncated"
-            >
+            <div [class.truncated]="isTruncated" [class.expanded]="!isTruncated">
               {{ doctor_details.description }}
             </div>
-            <button
-              *ngIf="isTruncated"
-              (click)="toggleDescription()"
-              class="toggleBtn"
-            >
+            <button *ngIf="isTruncated" (click)="toggleDescription()" class="toggleBtn">
               View More
             </button>
-            <button
-              *ngIf="!isTruncated"
-              (click)="toggleDescription()"
-              class="toggleBtn"
-            >
+            <button *ngIf="!isTruncated" (click)="toggleDescription()" class="toggleBtn">
               View Less
             </button>
           </div>
@@ -130,25 +105,10 @@
       <div class="datepicker date input-group">
         <mat-form-field appearance="fill" style="width: 100%">
           <mat-label>Choose a date</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            placeholder="Choose a date"
-            id="fecha1"
-            [min]="minDate"
-            [max]="maxDate"
-            [value]="minDate"
-            (dateChange)="onDateChange($event)"
-            readonly
-          />
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker
-            #picker
-            (dateChange)="onDateChange($event)"
-          ></mat-datepicker>
+          <input matInput [matDatepicker]="picker" placeholder="Choose a date" id="fecha1" [min]="minDate"
+            [max]="maxDate" [value]="minDate" (dateChange)="onDateChange($event)" readonly />
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker (dateChange)="onDateChange($event)"></mat-datepicker>
         </mat-form-field>
       </div>
     </div>
@@ -156,38 +116,28 @@
     <!-- Time Picker -->
     <div class="mt-4">
       <span class="time-picker">Select Slot </span>
-      <p
-        *ngIf="slot"
-        style="color: red; font-weight: 800"
-        class="text-center mt-5 mb-5"
-      >
+      <p *ngIf="slot" style="color: red; font-weight: 800" class="text-center mt-5 mb-5">
         No slot available!
+      </p>
+      <p *ngIf="isDocUnavailable" style="color: red; font-weight: 800" class="text-center mt-5 mb-5">
+        Doctor not available!
       </p>
       <div class="time-list" id="timepicker">
         <!-- Loop through time slots and display each -->
-        <div
-          class="time-option"
-          *ngFor="let slot of timeSlots"
-          (click)="selectTimeSlot(slot)"
-          [ngClass]="{
+        <div class="time-option" *ngFor="let slot of timeSlots" (click)="selectTimeSlot(slot)" [ngClass]="{
             booked: slot.booking_status === 1,
             onHold: slot.booking_status === 3,
             active: slot === selectedTimeSlot,
             disabled: slot.booking_status === 1 || slot.booking_status === 3
-          }"
-        >
+          }">
           <h3>{{ bookingType ? slot.token_number : null }}</h3>
           {{ slot.time_slot }}
         </div>
       </div>
     </div>
     <!-- Proceed Button -->
-    <div class="mt-4 pb-5" *ngIf="!slot">
-      <button
-        type="submit"
-        class="btn"
-        [disabled]="!selectedDate || !selectedTimeSlot"
-      >
+    <div class="mt-4 pb-5" *ngIf="!slot && !isDocUnavailable">
+      <button type="submit" class="btn" [disabled]="!selectedDate || !selectedTimeSlot">
         Proceed to Book
       </button>
     </div>

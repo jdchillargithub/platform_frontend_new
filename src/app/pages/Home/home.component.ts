@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   selectedDateString: string; // Initializes selectedDate with the current date and time
   selectedTimeSlot: any; // Property to store the selected time slot
   slot: boolean = false;
+  isDocUnavailable: boolean = false;
   minDate: Date;
   maxDate: Date;
   isTruncated: boolean = true; // Initially set to truncated
@@ -77,7 +78,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     // this.calculateMaxDate();
     // this.getWorkSlots();
   }
-  ngOnDestroy() {}
+  ngOnDestroy() { }
   toggleDescription() {
     this.isTruncated = !this.isTruncated;
   }
@@ -140,11 +141,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       (response) => {
         console.log(` work slots success onlog`, response);
         if (response.statusCode === 200) {
-          if (response.data.workSlots.length === 0) {
+          if (response.data.workSlots.length === 0 && !response.data.isDocUnavailable) {
             this.slot = true;
             console.log("=-=-=-slot=-=-=", this.slot);
-          } else {
+          } else if (response.data.isDocUnavailable === true) {
             this.slot = false;
+            this.isDocUnavailable = true;
+          }
+          else {
+            this.slot = false;
+            this.isDocUnavailable = false;
             console.log("=-=-=-slot=-=-=", this.slot);
           }
           this.bookingType = response.data.type;
