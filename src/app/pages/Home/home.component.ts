@@ -237,7 +237,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   calculateMaxDate(): Date {
     const maxDate = new Date();
-    maxDate.setDate(maxDate.getDate() + 7); // 7 days from today
+    maxDate.setDate(maxDate.getDate() + 28); // 7 days from today
     return maxDate;
   }
   // Date filter function

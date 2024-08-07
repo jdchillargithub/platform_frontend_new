@@ -48,7 +48,7 @@ export class PatientAppointmentComponent {
     private bookingData: BookingDataService,
     private formBuilder: FormBuilder,
     private location: Location // private cashfreeService: CashfreeService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.businessId = localStorage.getItem("businessId");
@@ -146,12 +146,13 @@ export class PatientAppointmentComponent {
         entityId: this.businessId,
       };
       try {
-        const response = await this.service.post(formValue, "/api/v1/booking/bookAppointment").toPromise();
+        const response = await this.service
+          .post(formValue, "/api/v1/booking/bookAppointment")
+          .toPromise();
 
         if (response.statusCode == 200) {
           // this.snackbarService.showCustomSnackBarSuccess(response.message);
           this.bookingData.bookingData = response.data;
-
 
           if (response.data.amount == 0) {
             const paymentvalue = {
@@ -159,7 +160,8 @@ export class PatientAppointmentComponent {
               orderId: response.data.orderId,
             };
             const resBook = await this.service
-              .post(paymentvalue, "/api/v1/payment/payment-update").toPromise();
+              .post(paymentvalue, "/api/v1/payment/payment-update")
+              .toPromise();
 
             if (resBook.statusCode == 200) {
               // console.log("Booking confirmed");
@@ -179,17 +181,13 @@ export class PatientAppointmentComponent {
               );
             }
           }
-
         } else {
           this.snackbarService.showCustomSnackBarError(response.message);
         }
-
       } catch (error) {
         console.error("API call failed:", error);
         this.snackbarService.showCustomSnackBarError(error);
       }
-
-
     }
   }
 
@@ -222,6 +220,8 @@ export class PatientAppointmentComponent {
               .post(paymentvalue, "/api/v1/payment/payment-update")
               .subscribe(
                 (response) => {
+                  console.log("RazorRES=>>", response);
+
                   if (response.statusCode == 200) {
                     // this.snackbarService.showCustomSnackBarSuccess(response.message);
                     this.router.navigate(["/AppointmentConfirmed"]);
@@ -258,9 +258,22 @@ export class PatientAppointmentComponent {
     script.async = false;
     document.head.appendChild(script);
 
+    // script.onload = () => {
+    //   const rzp = new Razorpay(options);
+    //   rzp.open();
+    // };
+
     script.onload = () => {
-      const rzp = new Razorpay(options);
-      rzp.open();
+      try {
+        const rzp = new Razorpay(options);
+        rzp.open();
+      } catch (error) {
+        console.error("Failed to initialize Razorpay:", error);
+      }
+    };
+
+    script.onerror = () => {
+      console.error("Failed to load Razorpay script");
     };
   }
 
