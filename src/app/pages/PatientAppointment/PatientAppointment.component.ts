@@ -279,7 +279,7 @@ export class PatientAppointmentComponent {
 
   async cashfreeCreateorder(orderId: string, payment_session_id: string) {
     let cashfree = await load({
-      mode: "sandbox",
+      mode: "production",
     });
 
     let checkoutOptions = {

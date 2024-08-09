@@ -7,11 +7,12 @@ import {
 } from "@angular/common/http";
 import { Observable, Subject, throwError } from "rxjs";
 import { catchError, takeUntil, tap } from "rxjs/operators";
+import { environment } from "src/environments/environment";
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
   /*** LOCAL BACKEND ***/
   // baseURL = "http://localhost:8000";
   /*** PRODUCTION BACKEND ***/
@@ -22,8 +23,7 @@ export class AuthService {
   // baseURL = "http://139.59.76.214:8081"
 
   // baseURL = "https://booking.chillarpayments.com/backend"
-  baseURL = "http://localhost:3002"
-
+  baseURL = environment.baseUrl;
 
   // 1. Generic API Methods
   post(data: any, apiURL): Observable<any> {
@@ -35,11 +35,10 @@ export class AuthService {
   get(apiURL) {
     return this.http.get(`${this.baseURL}${apiURL}`);
   }
-  
+
   getToken() {
     return localStorage.getItem("token") || "";
   }
-
 
   logout(): Observable<HttpResponse<any>> {
     return this.http
@@ -54,17 +53,18 @@ export class AuthService {
       );
   }
 
-
   // all functions
   dahboardDetails(apiURL: string): Observable<any> {
-    const url = `${this.baseURL}${apiURL.startsWith("/") ? apiURL : `/${apiURL}`
-      }`;
+    const url = `${this.baseURL}${
+      apiURL.startsWith("/") ? apiURL : `/${apiURL}`
+    }`;
     return this.http.get<any>(url, {});
   }
 
   getCurrentUser(apiURL: string): Observable<any> {
-    const url = `${this.baseURL}${apiURL.startsWith("/") ? apiURL : `/${apiURL}`
-      }`;
+    const url = `${this.baseURL}${
+      apiURL.startsWith("/") ? apiURL : `/${apiURL}`
+    }`;
     return this.http.post<any>(url, {});
   }
 
@@ -74,27 +74,59 @@ export class AuthService {
     return this.http.post<any>(url, requestBody);
   }
 
-  getCoporateUserList(corporateID: number, skip: number, limit: number, apiURL: string) {
+  getCoporateUserList(
+    corporateID: number,
+    skip: number,
+    limit: number,
+    apiURL: string
+  ) {
     const requestBody = { corporateID: corporateID, skip: skip, limit: limit };
 
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
   }
 
-  getCoporateVendorList(corporateID: number, skip: number, limit: number, apiURL: string) {
+  getCoporateVendorList(
+    corporateID: number,
+    skip: number,
+    limit: number,
+    apiURL: string
+  ) {
     const requestBody = { corporateID: corporateID, skip: skip, limit: limit };
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
   }
 
-  listOrdersOfVendors(vendorID: number, corporateID: number, skip: number, limit: number, apiURL: string) {
-    const requestBody = { vendorID: vendorID, corporateID: corporateID, skip: skip, limit: limit };
+  listOrdersOfVendors(
+    vendorID: number,
+    corporateID: number,
+    skip: number,
+    limit: number,
+    apiURL: string
+  ) {
+    const requestBody = {
+      vendorID: vendorID,
+      corporateID: corporateID,
+      skip: skip,
+      limit: limit,
+    };
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
   }
 
-  listOrderInvoiceOfVendors(corporateID: number, orderID: number, skip: number, limit: number, apiURL: string) {
-    const requestBody = { corporateID: corporateID, orderID: orderID, skip: skip, limit: limit };
+  listOrderInvoiceOfVendors(
+    corporateID: number,
+    orderID: number,
+    skip: number,
+    limit: number,
+    apiURL: string
+  ) {
+    const requestBody = {
+      corporateID: corporateID,
+      orderID: orderID,
+      skip: skip,
+      limit: limit,
+    };
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
   }
@@ -102,7 +134,6 @@ export class AuthService {
     const requestBody = { invoiceID: invoiceID, ext: ext };
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
-
   }
   getVendorList(skip: number, limit: number, apiURL: string) {
     const requestBody = { skip: skip, limit: limit };
@@ -121,7 +152,12 @@ export class AuthService {
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
   }
-  getCoporateOrderLists(corporateID: number, skip: number, limit: number, apiURL: string) {
+  getCoporateOrderLists(
+    corporateID: number,
+    skip: number,
+    limit: number,
+    apiURL: string
+  ) {
     const requestBody = { corporateID: corporateID, skip: skip, limit: limit };
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
@@ -151,16 +187,14 @@ export class AuthService {
     const requestBody = { invoiceID: invoiceID };
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
-
   }
 
   bulkApprove(orderID: number, apiURL: string) {
     const requestBody = { orderID: orderID };
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
-
   }
-  getCoporate(corporateID:number,apiURL: string){
+  getCoporate(corporateID: number, apiURL: string) {
     const requestBody = { corporateID: corporateID };
     const url = `${this.baseURL}${apiURL}`;
     return this.http.post<any>(url, requestBody);
