@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   // razorpayKey: "rzp_test_eEq43QGYfjTlfD",
   razorpayKey: "rzp_live_SAcYiKJ3GfhRpx",
-  baseUrl:"http://localhost:3002"
+  baseUrl:"http://localhost:3002",
+  basePoint:"/"
 };
 
 /*

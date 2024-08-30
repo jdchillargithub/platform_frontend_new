@@ -53,29 +53,28 @@ export class PendingPaymentVerificationComponent implements OnInit {
     //   );
     // }
     if (orderId) {
-      try {
-        const response = await this.service
-          .post({ orderId }, "/api/v1/payment/payment-verify")
-          .toPromise();
-        // console.log("PaymentVerify=>", response);
-
-        if (response.data.order_status === "PAID") {
-          await this.paymentUpdateForCashFree(
-            response?.data.cf_order_id,
-            orderId
-          );
-          // this.router.navigate(["/AppointmentConfirmed"]);
-        } else {
-          await this.paymentFailedUpdateForCashFree(
-            response?.data.cf_order_id,
-            orderId
-          );
-          // this.router.navigate(["/payment-failed"]);
-        }
-      } catch (error) {
-        console.error("API call failed:", error);
-        this.snackbarService.showCustomSnackBarError(error);
-      }
+      this.service
+        .post({ orderId: orderId }, "/api/v1/payment/payment-verify")
+        .subscribe(
+          async (response) => {
+            if (response.data.order_status === "PAID") {
+              await this.paymentUpdateForCashFree(
+                response?.data.cf_order_id,
+                orderId
+              );
+              // this.router.navigate(["/AppointmentConfirmed"]);
+            } else {
+              await this.paymentFailedUpdateForCashFree(
+                response?.data.cf_order_id,
+                orderId
+              );
+              // this.router.navigate(["/payment-failed"]);
+            }
+          },
+          (error) => {
+            console.error("Payment verification failed:", error);
+          }
+        );
     }
   }
 

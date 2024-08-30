@@ -15,6 +15,8 @@ import { DoctorsDataService } from "src/app/services/doctors.service";
 import { TimeSlotService } from "src/app/services/time.service";
 import { formatDate } from "@angular/common";
 import { DateAdapter } from "@angular/material/core";
+import {  NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 export interface PeriodicElement {
   time_slot: string;
@@ -58,25 +60,24 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.dateAdapter.setLocale("en-GB"); //dd/MM/yyyy
   }
   ngOnInit() {
-    // this.businessId = localStorage.getItem("businessId");
-    // this.CurrentDocId = localStorage.getItem("DoctorId");
     this.businessId = this.getQueryParam("entity");
     this.CurrentDocId = this.getQueryParam("id");
     localStorage.setItem("businessId", this.businessId);
     localStorage.setItem("DoctorId", this.CurrentDocId);
     this.getProfile();
     this.selectedDate = new Date();
-    // Initialize with today's date
     this.minDate = this.calculateMinDate();
     this.maxDate = this.calculateMaxDate();
     this.selectedDateString = this.formatDate(this.minDate);
 
-    // Set the initial minDate to today
-    // this.minDate = this.formatDate(new Date());
-
-    // Calculate and set the initial maxDate
-    // this.calculateMaxDate();
-    // this.getWorkSlots();
+    //re-initialize when the route comes again
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        if (event.urlAfterRedirects === '/home') {
+          this.getProfile();
+        }
+      });
   }
   ngOnDestroy() { }
   toggleDescription() {
@@ -122,7 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         (error) => {
           // Handle the error response
           console.error("API call failed:", error);
-          this.snackbarService.showCustomSnackBarError(error);
+          this.snackbarService.showCustomSnackBarError("Network error");
         }
       );
   }
@@ -172,7 +173,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       (error) => {
         // Handle the error response
         console.error("API call failed:", error);
-        this.snackbarService.showCustomSnackBarError(error);
+        this.snackbarService.showCustomSnackBarError("Network error");
       }
     );
   }
@@ -219,7 +220,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         (error) => {
           // Handle the error response
           console.error("API call failed:", error);
-          this.snackbarService.showCustomSnackBarError(error);
+          this.snackbarService.showCustomSnackBarError("Network error");
         }
       );
 
