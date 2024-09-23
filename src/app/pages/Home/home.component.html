@@ -37,13 +37,13 @@
       <div class="col-md-8 text-center" *ngIf="doctor_details">
         <div class="card-body">
           <h4 class="card-title">
-            <b>{{ doctor_details.doctor_name }}</b
+            <b>Dr.{{ doctor_details.doctor_name }}</b
             ><br />
           </h4>
           <h6>{{ doctor_details.qualification }}</h6>
           <h6>{{ doctor_details.designation }}</h6>
           <!-- ... (previous HTML code) ... -->
-          <div class="card-tex">
+          <!-- <div class="card-tex">
             <div
               [class.truncated]="isTruncated"
               [class.expanded]="!isTruncated"
@@ -64,7 +64,7 @@
             >
               View Less
             </button>
-          </div>
+          </div> -->
           <!-- ... (remaining HTML code) ... -->
           <!-- <div class="calcText">
             <div class="row">
@@ -155,7 +155,7 @@
 
     <!-- Time Picker -->
     <div class="mt-4">
-      <span class="time-picker">Select Slot </span>
+      <span *ngIf="timeSlots?.morning.length != 0" class="time-picker">Book Morning Appointment </span>
       <p
         *ngIf="slot"
         style="color: red; font-weight: 800"
@@ -174,7 +174,29 @@
         <!-- Loop through time slots and display each -->
         <div
           class="time-option"
-          *ngFor="let slot of timeSlots"
+          *ngFor="let slot of timeSlots.morning"
+          (click)="selectTimeSlot(slot)"
+          [ngClass]="{
+            booked: slot.booking_status === 1,
+            onHold: slot.booking_status === 3,
+            active: slot === selectedTimeSlot,
+            disabled: slot.booking_status === 1 || slot.booking_status === 3
+          }"
+        >
+          <h3>{{ bookingType ? slot.token_number : null }}</h3>
+          {{ slot.time_slot }}
+        </div>
+
+        <p
+          *ngIf="timeSlots?.evening.length != 0"
+          class="time-picker-new row my-2"
+        >
+          Book Evening Appointment
+        </p>
+
+        <div
+          class="time-option"
+          *ngFor="let slot of timeSlots.evening"
           (click)="selectTimeSlot(slot)"
           [ngClass]="{
             booked: slot.booking_status === 1,

@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   CurrentDocId: any;
   businessId: any;
   bookingType: any;
-  timeSlots: string[] = [];
+  timeSlots: any;
   selectedDate: Date = new Date();
   selectedDateString: string; // Initializes selectedDate with the current date and time
   selectedTimeSlot: any; // Property to store the selected time slot
@@ -46,6 +46,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   minDate: Date;
   maxDate: Date;
   isTruncated: boolean = true; // Initially set to truncated
+  // hasEveningSlot(): boolean {
+  //   return this.timeSlots?.some(slot => slot.session === 'evening');
+  // }
 
   constructor(
     private fb: FormBuilder,
@@ -142,7 +145,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       (response) => {
         console.log(` work slots success onlog`, response);
         if (response.statusCode === 200) {
-          if (response.data.workSlots.length === 0 && !response.data.isDocUnavailable) {
+          if (response.data.workSlots.evening.length === 0 && response.data.workSlots.morning.length === 0 && !response.data.isDocUnavailable) {
             this.slot = true;
             console.log("=-=-=-slot=-=-=", this.slot);
           } else if (response.data.isDocUnavailable === true) {
@@ -155,11 +158,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             console.log("=-=-=-slot=-=-=", this.slot);
           }
           this.bookingType = response.data.type;
-          this.timeSlots = response.data.workSlots.map((slot: any) => ({
-            time_slot: slot.time_slot,
-            booking_status: slot.booking_status,
-            token_number: slot.token_number,
-          }));
+          this.timeSlots = response.data.workSlots
         } else if (response.statusCode === 403) {
           this.slot = true;
           this.snackbarService.showCustomSnackBarError(response.message);
